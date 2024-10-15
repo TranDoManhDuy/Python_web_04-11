@@ -1,5 +1,13 @@
 import rootflaskapp
 
+# viết các class và function thuộc về product ở đây
+# Các class quản lý list chứa Các phương thức xử lý lọc dữ liệu, thêm sửa xóa dữ liệu.
+# Các hàm xử lý các ngoại lệ, các ràng buộc về dữ liệu. so sánh khớp mẫu. (Ví dụ: regex email, password)
+# viết các hàm xử lý và truy vấn, cập nhật dữ liệu SQL tại đây.
+
+# Các route xử lý dữ liệu từ client gửi lên server.
+# Các route xử lý dữ liệu từ server trả về client.
+
 @rootflaskapp.app.route("/products_list")
 def products_list():
     return rootflaskapp.render_template("views/products/list-product.html")
