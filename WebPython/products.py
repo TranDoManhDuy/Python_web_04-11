@@ -95,12 +95,12 @@ class danhsachphuongtien():
     
 danhsachPT = danhsachphuongtien()
 
-@rootflaskapp.app.route("/products_getListPT", method=["GET"])
+@rootflaskapp.app.route("/products_getListPT", methods=["GET"])
 def products_getListPT():
     if rootflaskapp.request.method == "GET":
         return rootflaskapp.jsonify(danhsachPT.getlist())
     
-@rootflaskapp.app.route("/products_addPT", method=["POST"])
+@rootflaskapp.app.route("/products_addPT", methods=["POST"])
 def products_addPT():
     if rootflaskapp.request.method == "POST":
         data = rootflaskapp.request.get_json()
@@ -115,7 +115,7 @@ def products_addPT():
         danhsachPT.themphuongtien(pt)
         return rootflaskapp.jsonify({"status": "success"})
 
-@rootflaskapp.app.route("/products_getPT", method=["POST"])
+@rootflaskapp.app.route("/products_getPT", methods=["POST"])
 def products_getPT():
     if rootflaskapp.request.method == "POST":
         data = rootflaskapp.request.get_json()
@@ -124,14 +124,14 @@ def products_getPT():
             return rootflaskapp.jsonify({"status": "fail"})
         return rootflaskapp.jsonify(pt.to_dict())
 
-@rootflaskapp.app.route("/products_getListPTtheoTen", method=["POST"])
+@rootflaskapp.app.route("/products_getListPTtheoTen", methods=["POST"])
 def products_getListPTtheoTen():
     if rootflaskapp.request.method == "POST":
         data = rootflaskapp.request.get_json()
         dspt = danhsachPT.layDSPttheoTen(data["tenphuongtien"])
         return rootflaskapp.jsonify(dspt)
     
-@rootflaskapp.app.route("/products_updatePT", method=["POST"])
+@rootflaskapp.app.route("/products_updatePT", methods=["POST"])
 def products_updatePT():
     if rootflaskapp.request.method == "POST":
         data = rootflaskapp.request.get_json()
