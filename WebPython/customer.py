@@ -47,7 +47,7 @@ class Client:  # khach hang so it
             self.__email = "Email is not valid"
         self.__phone = phone
         self.__Idlicense = IDlicense
-    
+
     def __str__(self):
         return f"Id: {self.__Id}, Name: {self.__name}, Email: {self.__email}, Phone: {self.__phone}, Idlicense: {self.__Idlicense}"
 
@@ -127,11 +127,32 @@ class Clients:  # khach hang so nhieu
 
     def __str__(self):
         return f"{self.__clients}"
-# /////////////////////regex////////////////////////////////////
+# /////////////////////regex, hỗ trợ tìm kiếm///////////////////////
 
 
 def validate_email(email):
     return bool(re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email))
+
+
+def checkOpen(st, code):
+    for i in range(len(st)):
+        if st[i] == code[0]:
+            j1, j2 = i, 0
+            while j1 < len(st):
+                if st[j1] == code[j2]:
+                    j2 += 1
+                j1 += 1
+                if j2 == len(code):
+                    return True
+    return False
+
+
+def searchOpen(ds, code):
+    resulf = []
+    for i in range(len(ds)):
+        if checkOpen(ds[i], code):
+            resulf.append(ds[i])
+    return resulf
 
 
 # /////////////////////test////////////////////////////////////
