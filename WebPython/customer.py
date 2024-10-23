@@ -16,7 +16,6 @@ def takedata(lenh):  # lenh truy van sql
         respon = c.fetchall()
         return respon
 
-
 def pushdata(lenh):  # lenh truy van sql
     with sqlite3.connect('WebPython/data.db') as conn:
         c = conn.cursor()
@@ -47,7 +46,6 @@ class Client:  # khach hang so it
             self.__email = "Email is not valid"
         self.__phone = phone
         self.__Idlicense = IDlicense
-
     def __str__(self):
         return f"Id: {self.__Id}, Name: {self.__name}, Email: {self.__email}, Phone: {self.__phone}, Idlicense: {self.__Idlicense}"
 
