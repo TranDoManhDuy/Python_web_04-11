@@ -180,8 +180,8 @@
                         <th>Thao tác</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
+                    <tbody id="LIST_PRODUCT_CONTAINER">
+                      <!-- <tr>
                         <td>#01DXO</td>
                         <td>Mercedes</td>
                         <td>Sedan</td>
@@ -192,9 +192,8 @@
                         <td>100%</td>
                         <td>
                           <a href="../products/edit-product.html" class="btn btn-sm btn-primary">Sửa</a>
-                          <a href="#" class="btn btn-sm btn-danger">Xóa</a>
                         </td>
-                      </tr>
+                      </tr> -->
                     </tbody>
                   </table>
                 </div>
@@ -242,6 +241,7 @@
   <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
   <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
 
+  <script src="{{url_for('static', filename='/handle/products/list-product.js')}}"></script>  
 </body>
 
 </html>

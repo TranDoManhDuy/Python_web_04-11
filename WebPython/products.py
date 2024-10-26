@@ -1,4 +1,5 @@
 import rootflaskapp
+import datacenter 
 # viết các class và function thuộc về product ở đây
 # Các class quản lý list chứa Các phương thức xử lý lọc dữ liệu, thêm sửa xóa dữ liệu.
 # viết các hàm xử lý và truy vấn, cập nhật dữ liệu SQL tại đây.
@@ -7,6 +8,7 @@ import rootflaskapp
 # Các route xử lý dữ liệu từ server trả về client.
 class phuongtien():
     def __init__(self) -> None:
+        self.__id = ""
         self.__tenphuongtien = ""
         self.__sodangki = ""
         self.__loaiphuongtien = ""
@@ -14,6 +16,12 @@ class phuongtien():
         self.__tinhtrangxe = ""
         self.__giathue1n = 0
         self.__danhmuc = ""
+        
+    def setId(self, id: str):
+        if len(id) > 0:
+            self.__id = id
+    def getId(self):
+        return self.__id
     def setTenhuongtien(self, tenphuongtien: str):
         if len(tenphuongtien) > 0:
             self.__tenphuongtien = tenphuongtien
@@ -21,7 +29,7 @@ class phuongtien():
         return self.__tenphuongtien
     
     def setSodangki(self, sodangki: str):
-        if len(sodangki and sodangki.isdigit()) == 9:
+        if len(sodangki) == 9:
             self.__sodangki = sodangki
     def getSodangki(self):
         return self.__sodangki
@@ -38,8 +46,8 @@ class phuongtien():
     def getSochongoi(self):
         return self.__sochongoi
     
-    def setTinhtrangxe(self, tinhtrangxe: str):
-        if tinhtrangxe in ['san sang', 'het hang']:
+    def setTinhtrangxe(self, tinhtrangxe: int):
+        if tinhtrangxe >= 0 and tinhtrangxe <= 100:
             self.__tinhtrangxe = tinhtrangxe
     def getTinhtrangxe(self):
         return self.__tinhtrangxe
@@ -62,13 +70,14 @@ class phuongtien():
     # trả về dictionary
     def to_dict(self):
         return {
-            "tenphuongtien": self.__tenphuongtien,
-            "sodangki": self.__sodangki,
+            "id": self.__id,
+            "danhmuc": self.__danhmuc,
             "loaiphuongtien": self.__loaiphuongtien,
+            "sodangki": self.__sodangki,
+            "tenphuongtien": self.__tenphuongtien,
             "sochongoi": self.__sochongoi,
-            "tinhtrangxe": self.__tinhtrangxe,
             "giathue1n": self.__giathue1n,
-            "danhmuc": self.__danhmuc
+            "tinhtrangxe": self.__tinhtrangxe
         }
 class danhsachphuongtien():
     def __init__(self) -> None:
@@ -92,7 +101,22 @@ class danhsachphuongtien():
         return [pt.to_dict() for pt in self.__danhsachphuongtien]
     
 danhsachPT = danhsachphuongtien()
-
+def fetchDataFromDB():
+    command = "SELECT * FROM VEHICLE"
+    data = datacenter.takedata(command)
+    for i in data:
+        pt = phuongtien()
+        pt.setId(str(i[0]).rjust(5, "0"))
+        pt.setDanhmuc(i[1])
+        pt.setLoaiphuongtien(i[2])
+        pt.setSodangki(i[3])
+        pt.setTenhuongtien(i[4])
+        pt.setSochongoi(i[5])
+        pt.setGiathue1n(i[6])
+        pt.setTinhtrangxe(i[7])
+        danhsachPT.themphuongtien(pt)
+        
+        
 @rootflaskapp.app.route("/products_getListPT", methods=["GET"])
 def products_getListPT():
     if rootflaskapp.request.method == "GET":
@@ -145,15 +169,19 @@ def products_updatePT():
         return rootflaskapp.jsonify({"status": "success"})
 
 
+      
+def run_product():
+    fetchDataFromDB()
+    danhsachPT = danhsachphuongtien()
+run_product()
+
 @rootflaskapp.app.route("/products_list")
 def products_list():
     return rootflaskapp.render_template("views/products/list-product.html")
 
-
 @rootflaskapp.app.route("/products_add")
 def products_add():
     return rootflaskapp.render_template("views/products/add-product.html")
-
 
 @rootflaskapp.app.route("/products_edit")
 def products_edit():

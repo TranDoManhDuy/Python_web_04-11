@@ -1,7 +1,7 @@
 import rootflaskapp
 
-emailAdmin = "abc"
-passwordAdmin = "123"
+emailAdmin = "admin"
+passwordAdmin = "admin"
 
 @rootflaskapp.app.route("/login_post", methods=["POST"])
 def login_post():
@@ -11,6 +11,6 @@ def login_post():
         return rootflaskapp.redirect("/statistical")
     return rootflaskapp.jsonify("Login failed")
 
-@rootflaskapp.app.route("/login")
+@rootflaskapp.app.route("/")
 def login():
     return rootflaskapp.render_template("views/login.html")
