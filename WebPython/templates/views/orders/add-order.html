@@ -7,115 +7,101 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content>
         <meta name="author" content>
-        <link href="{{url_for('static', filename='/img/logo/logo.png')}}" rel="icon">
+        <link href="../../img/logo/logo.png" rel="icon">
         <title>Thêm đơn hàng</title>
-        <link href="{{url_for('static', filename='/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-        <link href="{{url_for('static', filename='/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
-        <link href="{{url_for('static', filename='/css/ruang-admin.min.css')}}" rel="stylesheet">
+        <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../../css/ruang-admin.min.css" rel="stylesheet">
     </head>
 
     <body id="page-top">
         <div id="wrapper">
-            <!-- Sidebar -->
-            <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href>
-                    <div class="sidebar-brand-icon">
-                        <img src="{{url_for('static', filename='/img/logo/logo2.png')}}">
-                    </div>
-                    <div class="sidebar-brand-text mx-3">Rent & Ride</div>
-                </a>
-                <hr class="sidebar-divider my-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="../statistical/statistical.html">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Thống kê</span></a>
-                </li>
-                <hr class="sidebar-divider">
-                <div class="sidebar-heading">
-                    Quản lý
-                </div>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable1"
-                        aria-expanded="true"
-                        aria-controls="collapseTable">
-                        <i class="fas fa-fw fa-user"></i>
-                        <span>Quản lý đơn hàng</span>
-                    </a>
-                    <div id="collapseTable1" class="collapse" aria-labelledby="headingTable"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Thao tác</h6>
-                            <a class="collapse-item" href="../users/list-user.html">Danh sách</a>
-                            <a class="collapse-item" href="../users/add-user.html">Thêm </a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable12"
-                        aria-expanded="true"
-                        aria-controls="collapseTable">
-                        <i class="fas fa-fw fa-users"></i>
-                        <span>Quản lý khách hàng</span>
-                    </a>
-                    <div id="collapseTable12" class="collapse" aria-labelledby="headingTable"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Thao tác</h6>
-                            <a class="collapse-item" href="../customer/list-customer.html">Danh sách</a>
-                            <a class="collapse-item" href="../customer/add-customer.html">Thêm </a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable2"
-                        aria-expanded="true"
-                        aria-controls="collapseTable">
-                        <i class="fas fa-fw fa-table"></i>
-                        <span>Quản lý danh mục</span>
-                    </a>
-                    <div id="collapseTable2" class="collapse" aria-labelledby="headingTable"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Thao tác</h6>
-                            <a class="collapse-item" href="../categories/list-category.html">Danh sách</a>
-                            <a class="collapse-item" href="../categories/add-category.html">Thêm</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable3"
-                        aria-expanded="true"
-                        aria-controls="collapseTable">
-                        <i class="fas fa-fw fa-car"></i>
-                        <span>Quản lý xe</span>
-                    </a>
-                    <div id="collapseTable3" class="collapse" aria-labelledby="headingTable"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Thao tác</h6>
-                            <a class="collapse-item" href="../products/list-product.html">Danh sách</a>
-                            <a class="collapse-item" href="../products/add-product.html">Thêm</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable4"
-                        aria-expanded="true"
-                        aria-controls="collapseTable">
-                        <i class="fas fa-fw fa-clipboard-list"></i>
+<!-- Sidebar -->
+<ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href>
+        <div class="sidebar-brand-icon">
+            <img src="../../img/logo/logo2.png">
+        </div>
+        <div class="sidebar-brand-text mx-3">Ride and Rent</div>
+    </a>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item">
+        <a class="nav-link" href="../statistical/statistical.html">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Thống kê</span></a>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Quản lý
+    </div>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable1"
+            aria-expanded="true"
+            aria-controls="collapseTable">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Quản lý nhân viên</span>
+        </a>
+        <div id="collapseTable1" class="collapse" aria-labelledby="headingTable"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Thao tác</h6>
+                <a class="collapse-item" href="../users/list-user.html">Danh sách</a>
+                <a class="collapse-item" href="../users/add-user.html">Thêm </a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable12"
+            aria-expanded="true"
+            aria-controls="collapseTable">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Quản lý khách hàng</span>
+        </a>
+        <div id="collapseTable12" class="collapse" aria-labelledby="headingTable"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Thao tác</h6>
+                <a class="collapse-item" href="../customer/list-customer.html">Danh sách</a>
+                <a class="collapse-item" href="../customer/add-customer.html">Thêm </a>
+            </div>
+        </div>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable3"
+            aria-expanded="true"
+            aria-controls="collapseTable">
+            <i class="fas fa-fw fa-car"></i>
+            <span>Quản lý xe</span>
+        </a>
+        <div id="collapseTable3" class="collapse" aria-labelledby="headingTable"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Thao tác</h6>
+                <a class="collapse-item" href="../products/list-product.html">Danh sách</a>
+                <a class="collapse-item" href="../products/add-product.html">Thêm</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable4"
+            aria-expanded="true"
+            aria-controls="collapseTable">
+            <i class="fas fa-fw fa-clipboard-list"></i>
 
-                        <span>Quản lý đơn hàng</span>
-                    </a>
-                    <div id="collapseTable4" class="collapse" aria-labelledby="headingTable"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Thao tác</h6>
-                            <a class="collapse-item" href="../orders/list-order.html">Danh sách</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <!-- Sidebar -->
+            <span>Quản lý đơn hàng</span>
+        </a>
+        <div id="collapseTable4" class="collapse" aria-labelledby="headingTable"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Thao tác</h6>
+                <a class="collapse-item" href="../orders/list-order.html">Danh sách</a>
+                <a class="collapse-item" href="../orders/add-order.html">Thêm</a>
+            </div>
+        </div>
+    </li>
+</ul>
+<!-- Sidebar -->
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
                     <!-- TopBar -->
@@ -131,7 +117,7 @@
                                     <img class="img-profile rounded-circle"
                                         src="https://media.vov.vn/sites/default/files/styles/large/public/2020-10/st.jpg"
                                         style="max-width: 60px">
-                                    <span class="ml-2 d-none d-lg-inline text-white small">Thanh Thảo</span>
+                                    <span class="ml-2 d-none d-lg-inline text-white small">Mạnh Duy</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="userDropdown">
@@ -178,71 +164,49 @@
                                         <h6 class="m-0 font-weight-bold text-primary">Thêm đơn hàng</h6>
                                     </div>
                                     <div class="card-body">
-                                        <form action method enctype="multipart/form-data">
-                                            <!-- Thêm enctype để upload file -->
+                                        <form action="process_order.php" method="post" enctype="multipart/form-data">
                                             <div class="form-group">
-                                                <label for="orderCode">Mã hóa đơn</label>
-                                                <input type="text" class="form-control" id="orderCode" placeholder="Nhập mã hóa đơn">
+                                              <label for="invoiceId">Mã số hóa đơn</label>
+                                              <input type="text" class="form-control" id="invoiceId" name="invoiceId" placeholder="Nhập mã số hóa đơn" required disabled="false">
                                             </div>
-                                        
                                             <div class="form-group">
-                                                <label for="customerName">Người thuê</label>
-                                                <input type="text" class="form-control" id="customerName" placeholder="Nhập tên người thuê">
+                                              <label for="orderDate">Ngày đặt</label>
+                                              <input type="date" class="form-control" id="orderDate" name="orderDate" required>
                                             </div>
-                                        
                                             <div class="form-group">
-                                                <label for="dob">Ngày sinh</label>
-                                                <input type="date" class="form-control" id="dob" placeholder="Nhập ngày sinh">
-                                            </div>
-                                        
+                                                <label for="employeeName">ID nhân viên</label>
+                                                <input type="text" class="form-control" id="employeeName" placeholder="Nhập id nhân viên">
+                                              </div>
                                             <div class="form-group">
-                                                <label for="startTime">Thời gian bắt đầu</label>
-                                                <input type="datetime-local" class="form-control" id="startTime" placeholder="Nhập thời gian bắt đầu">
+                                              <label for="endTime">Thời gian kết thúc</label>
+                                              <input type="date" class="form-control" id="endTime" name="endTime" required>
                                             </div>
-                                        
+                                            
                                             <div class="form-group">
-                                                <label for="endTime">Thời gian kết thúc</label>
-                                                <input type="datetime-local" class="form-control" id="endTime" placeholder="Nhập thời gian kết thúc">
+                                              <label for="renterCccd">Số CCCD ng thuê</label>
+                                              <input type="text" class="form-control" id="renterCccd" name="renterCccd" placeholder="Nhập số CCCD" required>
                                             </div>
-                                        
+                                            
                                             <div class="form-group">
-                                                <label for="price">Đơn giá</label>
-                                                <input type="number" class="form-control" id="price" placeholder="Nhập đơn giá">
+                                              <label for="vehicleRegNumber">Số đăng ký xe</label>
+                                              <input type="text" class="form-control" id="vehicleRegNumber" name="vehicleRegNumber" placeholder="Nhập số đăng ký xe" required>
                                             </div>
-                                        
+                                            
                                             <div class="form-group">
-                                                <label for="initialStatus">Trạng thái xe ban đầu</label>
-                                                <select class="form-control" id="initialStatus">
-                                                    <option value="Sẵn hàng">Sẵn hàng</option>
-                                                    <option value="Đang xử lý">Đang xử lý</option>
-                                                </select>
+                                              <label for="unitPrice">Đơn giá</label>
+                                              <input type="text" class="form-control" id="unitPrice" name="unitPrice" placeholder="Nhập đơn giá" required>
                                             </div>
-                                        
+                                            
                                             <div class="form-group">
-                                                <label for="paymentStatus">Trạng thái thanh toán</label>
-                                                <select class="form-control" id="paymentStatus">
-                                                    <option value="Chưa thanh toán">Chưa thanh toán</option>
-                                                    <option value="Đã thanh toán">Đã thanh toán</option>
-                                                </select>
+                                              <label for="paymentStatus">Trạng thái thanh toán</label>
+                                              <select id="paymentStatus" name="paymentStatus" class="form-control" required>
+                                                <option value="Chưa thanh toán">Chưa thanh toán</option>
+                                                <option value="Đã thanh toán">Đã thanh toán</option>
+                                              </select>
                                             </div>
-                                        
                                             <div class="form-group">
-                                                <label for="confirmationStatus">Xác nhận thuê</label>
-                                                <select class="form-control" id="confirmationStatus">
-                                                    <option value="Chưa xác nhận">Chưa xác nhận</option>
-                                                    <option value="Đang xác nhận">Đang xác nhận</option>
-                                                </select>
-                                            </div>
-                                        
-                                            <!-- Phần thêm ảnh đơn hàng -->
-                                            <div class="form-group">
-                                                <label for="orderImage">Ảnh đơn hàng</label>
-                                                <input type="file" class="form-control" id="orderImage" accept="image/*">
-                                            </div>
-                                        
                                             <button type="submit" class="btn btn-primary">Thêm đơn hàng</button>
-                                        </form>
-                                        
+                                          </form>
                                     </div>
                                 </div>
                             </div>
@@ -300,6 +264,7 @@
                     </div>
                     <!---Container Fluid-->
                 </div>
+               
             </div>
         </div>
 
@@ -307,11 +272,12 @@
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-        
-        <script src="{{url_for('static', filename='/vendor/jquery/jquery.min.js')}}"></script>
-        <script src="{{url_for('static', filename='/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-        <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-        <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
+
+        <script src="../../vendor/jquery/jquery.min.js"></script>
+        <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="../../js/ruang-admin.min.js"></script>
+
     </body>
 
 </html>

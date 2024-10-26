@@ -7,11 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="{{url_for('static', filename='/img/logo/logo.png')}}" rel="icon">
+  <link href="../../img/logo/logo.png" rel="icon">
   <title>Danh sách khách hàng</title>
-  <link href="{{url_for('static', filename='/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{url_for('static', filename='/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{url_for('static', filename='/css/ruang-admin.min.css')}}" rel="stylesheet">
+  <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="../../css/ruang-admin.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -20,9 +20,9 @@
 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href>
       <div class="sidebar-brand-icon">
-          <img src="{{url_for('static', filename='/img/logo/logo.png')}}">
+          <img src="../../img/logo/logo2.png">
       </div>
-      <div class="sidebar-brand-text mx-3">Rent & Ride</div>
+      <div class="sidebar-brand-text mx-3">Ride and Rent</div>
   </a>
   <hr class="sidebar-divider my-0">
   <li class="nav-item">
@@ -66,22 +66,7 @@
           </div>
       </div>
   </li>
-  <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable2"
-          aria-expanded="true"
-          aria-controls="collapseTable">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Quản lý danh mục</span>
-      </a>
-      <div id="collapseTable2" class="collapse" aria-labelledby="headingTable"
-          data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Thao tác</h6>
-              <a class="collapse-item" href="../categories/list-category.html">Danh sách</a>
-              <a class="collapse-item" href="../categories/add-category.html">Thêm</a>
-          </div>
-      </div>
-  </li>
+  
   <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable3"
           aria-expanded="true"
@@ -111,6 +96,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Thao tác</h6>
               <a class="collapse-item" href="../orders/list-order.html">Danh sách</a>
+              <a class="collapse-item" href="../orders/add-order.html">Thêm</a>
           </div>
       </div>
   </li>
@@ -130,7 +116,7 @@
               aria-haspopup="true" aria-expanded="false">
               <img class="img-profile rounded-circle" src="https://media.vov.vn/sites/default/files/styles/large/public/2020-10/st.jpg"
                   style="max-width: 60px">
-              <span class="ml-2 d-none d-lg-inline text-white small">Thanh Thảo</span>
+              <span class="ml-2 d-none d-lg-inline text-white small">Mạnh Duy</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="userDropdown">
@@ -163,11 +149,16 @@
             <h1 class="h3 mb-0 text-gray-800">Danh sách khách hàng</h1>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="./">Trang chủ</a></li>
-              <li class="breadcrumb-item">Khách hàng</li>
+              <li class="breadcrumb-item">khách hàng</li>
               <li class="breadcrumb-item active" aria-current="page">Danh sách khách hàng</li>
             </ol>
           </div>
-        
+          <div class="card bg-white mb-3">
+            <form action="" class="form p-3">
+              <input class="form-control" type="text" placeholder="Tìm kiếm">
+              <button class="btn btn-primary mt-2">Tìm kiếm</button>
+            </form>
+          </div>
           <div class="row">
             <div class="col-lg-12 mb-4">
               <div class="card">
@@ -179,76 +170,76 @@
                     <thead class="thead-light">
                       <tr>
                         <th>ID</th>
-                        <th>Hình ảnh</th>
-                        <th>Tên</th>
                         <th>SĐT</th>
-                        <th>Email</th> <!-- Thêm cột Email -->
-                        <th>Địa chỉ</th>
-                        <th>Ngày tạo</th>
+                        <th>ID bằng lái xe</th>
+                        <th>Email</th>
+                        <th>Họ</th>
+                        <th>Tên</th>
+                        <th>Số CCCD</th>
                         <th>Thao tác</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <td>#01</td>
-                        <td><img src="https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg" height="70px" width="70px" style="border-radius: 50%;object-fit: cover;" alt=""></td>
-                        <td>Nguyễn Ti Ni</td>
                         <td>0999888777</td>
-                        <td>tini@gmail.com</td> <!-- Thêm thông tin Email -->
-                        <td>Quận 9, TP HCM</td>
-                        <td>10/10/2024</td>
+                        <td>B123456789</td> <!-- ID bằng lái xe -->
+                        <td>nguyenthao@gmail.com</td> <!-- Email -->
+                        <td>Nguyễn</td> <!-- Họ -->
+                        <td>Thảo</td> <!-- Tên -->
+                        <td>123456789012</td> <!-- Số CCCD -->
                         <td>
                           <a href="./edit-customer.html" class="btn btn-sm btn-primary">Sửa</a>
                           <a href="#" class="btn btn-sm btn-danger">Xóa</a>
                         </td>
                       </tr>
                       <tr>
-                        <td>#02</td>
-                        <td><img src="https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg" height="70px" width="70px" style="border-radius: 50%;object-fit: cover;" alt=""></td>
-                        <td>Trần Mạnh Duy</td>
-                        <td>0999888778</td>
-                        <td>manhduy@gmail.com</td> <!-- Thêm thông tin Email -->
-                        <td>Quận 9, TP HCM</td>
-                        <td>10/10/2024</td>
+                        <td>#01</td>
+                        <td>0999888777</td>
+                        <td>B123456789</td> <!-- ID bằng lái xe -->
+                        <td>tranduy@gmail.com</td> <!-- Email -->
+                        <td>Trần</td> <!-- Họ -->
+                        <td>Duy</td> <!-- Tên -->
+                        <td>123456789012</td> <!-- Số CCCD -->
                         <td>
                           <a href="./edit-customer.html" class="btn btn-sm btn-primary">Sửa</a>
                           <a href="#" class="btn btn-sm btn-danger">Xóa</a>
                         </td>
                       </tr>
                       <tr>
-                        <td>#03</td>
-                        <td><img src="https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg" height="70px" width="70px" style="border-radius: 50%;object-fit: cover;" alt=""></td>
-                        <td>Nguyễn Thị Thanh Thảo</td>
-                        <td>0999888779</td>
-                        <td>thao@gmail.com</td> <!-- Thêm thông tin Email -->
-                        <td>Quận 9, TP HCM</td>
-                        <td>10/10/2024</td>
+                        <td>#01</td>
+                        <td>0999888777</td>
+                        <td>B123456789</td> <!-- ID bằng lái xe -->
+                        <td>tranni@gmail.com</td> <!-- Email -->
+                        <td>Trần</td> <!-- Họ -->
+                        <td>Ni</td> <!-- Tên -->
+                        <td>123456789012</td> <!-- Số CCCD -->
                         <td>
                           <a href="./edit-customer.html" class="btn btn-sm btn-primary">Sửa</a>
                           <a href="#" class="btn btn-sm btn-danger">Xóa</a>
                         </td>
                       </tr>
                       <tr>
-                        <td>#04</td>
-                        <td><img src="https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg" height="70px" width="70px" style="border-radius: 50%;object-fit: cover;" alt=""></td>
-                        <td>Nguyễn Văn D</td>
-                        <td>0999888780</td>
-                        <td>nguyenvand@example.com</td> <!-- Thêm thông tin Email -->
-                        <td>Quận 4, TP HCM</td>
-                        <td>01/06/2024</td>
+                        <td>#01</td>
+                        <td>0999888777</td>
+                        <td>B123456789</td> <!-- ID bằng lái xe -->
+                        <td>nguyenvana@gmail.com</td> <!-- Email -->
+                        <td>Nguyễn</td> <!-- Họ -->
+                        <td>Văn A</td> <!-- Tên -->
+                        <td>123456789012</td> <!-- Số CCCD -->
                         <td>
                           <a href="./edit-customer.html" class="btn btn-sm btn-primary">Sửa</a>
                           <a href="#" class="btn btn-sm btn-danger">Xóa</a>
                         </td>
                       </tr>
                       <tr>
-                        <td>#05</td>
-                        <td><img src="https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg" height="70px" width="70px" style="border-radius: 50%;object-fit: cover;" alt=""></td>
-                        <td>Nguyễn Văn E</td>
-                        <td>0999888781</td>
-                        <td>nguyenvane@example.com</td> <!-- Thêm thông tin Email -->
-                        <td>Quận 5, TP HCM</td>
-                        <td>01/06/2024</td>
+                        <td>#01</td>
+                        <td>0999888777</td>
+                        <td>B123456789</td> <!-- ID bằng lái xe -->
+                        <td>nguyenvanb@gmail.com</td> <!-- Email -->
+                        <td>Nguyễn</td> <!-- Họ -->
+                        <td>Văn B</td> <!-- Tên -->
+                        <td>123456789012</td> <!-- Số CCCD -->
                         <td>
                           <a href="./edit-customer.html" class="btn btn-sm btn-primary">Sửa</a>
                           <a href="#" class="btn btn-sm btn-danger">Xóa</a>
@@ -256,7 +247,6 @@
                       </tr>
                     </tbody>
                   </table>
-                  
                 </div>
                 <div class="card-footer"></div>
               </div>
@@ -287,6 +277,8 @@
         
         <!---Container Fluid-->
       </div>
+      
+      <!-- Footer -->
     </div>
   </div>
 
@@ -295,9 +287,11 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <script src="{{url_for('static', filename='/vendor/jquery/jquery.min.js')}}"></script>
-  <script src="{{url_for('static', filename='/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-  <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
+  <script src="../../vendor/jquery/jquery.min.js"></script>
+  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../../js/ruang-admin.min.js"></script>
+
 </body>
+
 </html>

@@ -7,23 +7,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content>
         <meta name="author" content>
-        <link href="{{url_for('static', filename='/img/logo/logo.png')}}" rel="icon">
+        <link href="../../img/logo/logo.png" rel="icon">
         <title>Hồ sơ</title>
-        <link rel="stylesheet" href="{{url_for('static', filename='/vendor/fontawesome-free/css/all.min.css')}}" type="text/css">
-        <link rel="stylesheet" href="{{url_for('static', filename='/vendor/bootstrap/css/bootstrap.min.css')}}" type="text/css">
-        <link rel="stylesheet" href="{{url_for('static', filename='/css/ruang-admin.min.css')}}" type="text/css">
+        <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../../css/ruang-admin.min.css" rel="stylesheet">
     </head>
 
     <body id="page-top">
         <div id="wrapper">
             
-            <!-- Sidebar -->
+<!-- Sidebar -->
 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href>
         <div class="sidebar-brand-icon">
-            <img src="{{url_for('static', filename='/img/logo/logo2.png')}}">
+            <img src="../../img/logo/logo2.png">
         </div>
-        <div class="sidebar-brand-text mx-3">Rent & Ride</div>
+        <div class="sidebar-brand-text mx-3">Ride and Rent</div>
     </a>
     <hr class="sidebar-divider my-0">
     <li class="nav-item">
@@ -67,22 +67,8 @@
             </div>
         </div>
     </li>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable2"
-            aria-expanded="true"
-            aria-controls="collapseTable">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Quản lý danh mục</span>
-        </a>
-        <div id="collapseTable2" class="collapse" aria-labelledby="headingTable"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Thao tác</h6>
-                <a class="collapse-item" href="../categories/list-category.html">Danh sách</a>
-                <a class="collapse-item" href="../categories/add-category.html">Thêm</a>
-            </div>
-        </div>
-    </li>
+    
+    
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable3"
             aria-expanded="true"
@@ -112,6 +98,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Thao tác</h6>
                 <a class="collapse-item" href="../orders/list-order.html">Danh sách</a>
+                <a class="collapse-item" href="../orders/add-order.html">Thêm</a>
             </div>
         </div>
     </li>
@@ -129,9 +116,9 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <img class="img-profile rounded-circle" src="{{url_for('static', filename='/img/logo/thao.JPG')}}"
+                <img class="img-profile rounded-circle" src="https://media.vov.vn/sites/default/files/styles/large/public/2020-10/st.jpg"
                     style="max-width: 60px">
-                <span class="ml-2 d-none d-lg-inline text-white small">Thanh Thảo</span>
+                <span class="ml-2 d-none d-lg-inline text-white small">Mạnh Duy</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
@@ -168,9 +155,9 @@
                                     <h5 class="m-0 font-weight-bold text-primary">Thông Tin Chi Tiết</h5>
                                 </div>
                                 <div class="card-body text-center">
-                                    <img src="{{url_for('static', filename='/img/logo/thao.JPG')}}" width="150px" style="border-radius: 50%;" alt="Ảnh Admin">
-                                    <h3 class="mt-3">Thanh Thảo</h3> <!-- Tên admin -->
-                                    <p><strong>Số điện thoại:</strong> 0943316640</p> <!-- Số điện thoại -->
+                                    <img src="https://media.vov.vn/sites/default/files/styles/large/public/2020-10/st.jpg" width="150px" style="border-radius: 50%;" alt="Ảnh Admin">
+                                    <h3 class="mt-3">Trần Mạnh Duy</h3> <!-- Tên admin -->
+                                    <p><strong>Số điện thoại:</strong> 0999888777</p> <!-- Số điện thoại -->
                                     <p><strong>Địa chỉ:</strong> Quận 9, TP HCM</p> <!-- Địa chỉ -->
                                     <p><strong>Chức vụ:</strong> Quản trị</p> <!-- Chức vụ -->
                                 </div>
@@ -183,7 +170,7 @@
                     </div>
                 </section>
                 
-                <!-- content_id -->
+                
             </div>
         </div>
 
@@ -192,10 +179,11 @@
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <script src="{{url_for('static', filename='/vendor/jquery/jquery.min.js')}}"></script>
-        <script src="{{url_for('static', filename='/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-        <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-        <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
+        <script src="../../vendor/jquery/jquery.min.js"></script>
+        <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="../../js/ruang-admin.min.js"></script>
 
     </body>
+
 </html>

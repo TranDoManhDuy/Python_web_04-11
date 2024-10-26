@@ -7,22 +7,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="{{url_for('static', filename='/img/logo/logo.png')}}" rel="icon">
+  <link href="../../img/logo/logo.png" rel="icon">
   <title>Chi tiết đơn hàng</title>
-  <link href="{{url_for('static', filename='/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{url_for('static', filename='/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{url_for('static', filename='/css/ruang-admin.min.css')}}" rel="stylesheet">
+  <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="../../css/ruang-admin.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
   <div id="wrapper">
-   <!-- Sidebar -->
+<!-- Sidebar -->
 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href>
       <div class="sidebar-brand-icon">
-          <img src="{{url_for('static', filename='/img/logo/logo.png')}}">
+          <img src="../../img/logo/logo2.png">
       </div>
-      <div class="sidebar-brand-text mx-3">Rent & Ride</div>
+      <div class="sidebar-brand-text mx-3">Ride and Rent</div>
   </a>
   <hr class="sidebar-divider my-0">
   <li class="nav-item">
@@ -66,22 +66,7 @@
           </div>
       </div>
   </li>
-  <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable2"
-          aria-expanded="true"
-          aria-controls="collapseTable">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Quản lý danh mục</span>
-      </a>
-      <div id="collapseTable2" class="collapse" aria-labelledby="headingTable"
-          data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Thao tác</h6>
-              <a class="collapse-item" href="../categories/list-category.html">Danh sách</a>
-              <a class="collapse-item" href="../categories/add-category.html">Thêm</a>
-          </div>
-      </div>
-  </li>
+  
   <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable3"
           aria-expanded="true"
@@ -111,6 +96,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Thao tác</h6>
               <a class="collapse-item" href="../orders/list-order.html">Danh sách</a>
+              <a class="collapse-item" href="../orders/add-order.html">Thêm</a>
           </div>
       </div>
   </li>
@@ -130,7 +116,7 @@
               aria-haspopup="true" aria-expanded="false">
               <img class="img-profile rounded-circle" src="https://media.vov.vn/sites/default/files/styles/large/public/2020-10/st.jpg"
                   style="max-width: 60px">
-              <span class="ml-2 d-none d-lg-inline text-white small">Thanh Thảo</span>
+              <span class="ml-2 d-none d-lg-inline text-white small">Mạnh Duy</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="userDropdown">
@@ -180,11 +166,14 @@
                       <tr>
                         <th>ID</th>
                         <th>Mã hóa đơn</th>
+                        <th>Tên nhân viên</th>
+                        <th>Hình ảnh</th>
                         <th>Tên xe</th>
                         <th>Thời gian thuê</th>
                         <th>Thời gian trả</th>
                         <th>Số lượng</th>
                         <th>Tình trạng xe ban đầu</th>
+                        <th>Tình trạng xe sau khi trả</th>
                         <th>Người thuê</th>
                         <th>Trạng thái thanh toán</th>
                       </tr>
@@ -193,35 +182,16 @@
                       <tr>
                         <td>#01</td>
                         <td>#999</td>
+                        <td>Trần Duy</td>
+                        <td><img src="../../img/logo/xe1.jpg" width="70px" alt=""></td>
                         <td>Toyota Camry</td>
-                        <td>01/06/2024</td>
-                        <td>05/06/2024</td>
-                        <td>1</td>
-                        <td><span class="badge badge-success">Sẵn sàng</span></td>
-                        <td>Mạnh Duy</td>
-                        <td><span class="badge badge-danger">Chưa thanh toán</span></td>
-                      </tr>
-                      <tr>
-                        <td>#02</td>
-                        <td>#1000</td>
-                        <td>Honda Civic</td>
                         <td>10/10/2024</td>
                         <td>11/10/2024</td>
                         <td>1</td>
-                        <td><span class="badge badge-warning">Đang bảo dưỡng</span></td>
-                        <td>Nguyễn Văn A</td>
-                        <td><span class="badge badge-success">Đã thanh toán</span></td>
-                      </tr>
-                      <tr>
-                        <td>#03</td>
-                        <td>#1001</td>
-                        <td>Ford Ranger</td>
-                        <td>03/06/2024</td>
-                        <td>07/06/2024</td>
-                        <td>2</td>
-                        <td><span class="badge badge-success">Sẵn sàng</span></td>
-                        <td>Phạm Văn B</td>
-                        <td><span class="badge badge-warning">Đang chờ thanh toán</span></td>
+                        <td>100%</td>
+                        <td>100%</td>
+                        <td>Nguyễn Thảo</td>
+                        <td><span class="badge badge-danger">Chưa thanh toán</span></td>
                       </tr>
                     </tbody>
                   </table>
@@ -258,6 +228,7 @@
         </div>
         <!---Container Fluid-->
       </div>
+      
     </div>
   </div>
 
@@ -265,10 +236,12 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
-  <script src="{{url_for('static', filename='/vendor/jquery/jquery.min.js')}}"></script>
-  <script src="{{url_for('static', filename='/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-  <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
+
+  <script src="../../vendor/jquery/jquery.min.js"></script>
+  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../../js/ruang-admin.min.js"></script>
+
 </body>
 
 </html>

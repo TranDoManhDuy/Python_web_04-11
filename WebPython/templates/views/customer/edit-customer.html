@@ -7,11 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="{{url_for('static', filename='/img/logo/logo.png')}}" rel="icon">
+  <link href="../../img/logo/logo.png" rel="icon">
   <title>Sửa khách hàng</title>
-  <link href="{{url_for('static', filename='/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{url_for('static', filename='/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{url_for('static', filename='/css/ruang-admin.min.css')}}" rel="stylesheet">
+  <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="../../css/ruang-admin.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -20,9 +20,9 @@
 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href>
       <div class="sidebar-brand-icon">
-          <img src="{{url_for('static', filename='/img/logo/logo.png')}}">
+          <img src="../../img/logo/logo2.png">
       </div>
-      <div class="sidebar-brand-text mx-3">Rent & Ride</div>
+      <div class="sidebar-brand-text mx-3">Ride and Rent</div>
   </a>
   <hr class="sidebar-divider my-0">
   <li class="nav-item">
@@ -66,22 +66,7 @@
           </div>
       </div>
   </li>
-  <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable2"
-          aria-expanded="true"
-          aria-controls="collapseTable">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Quản lý danh mục</span>
-      </a>
-      <div id="collapseTable2" class="collapse" aria-labelledby="headingTable"
-          data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Thao tác</h6>
-              <a class="collapse-item" href="../categories/list-category.html">Danh sách</a>
-              <a class="collapse-item" href="../categories/add-category.html">Thêm</a>
-          </div>
-      </div>
-  </li>
+  
   <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable3"
           aria-expanded="true"
@@ -111,6 +96,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Thao tác</h6>
               <a class="collapse-item" href="../orders/list-order.html">Danh sách</a>
+              <a class="collapse-item" href="../orders/add-order.html">Thêm</a>
           </div>
       </div>
   </li>
@@ -130,7 +116,7 @@
               aria-haspopup="true" aria-expanded="false">
               <img class="img-profile rounded-circle" src="https://media.vov.vn/sites/default/files/styles/large/public/2020-10/st.jpg"
                   style="max-width: 60px">
-              <span class="ml-2 d-none d-lg-inline text-white small">Thanh Thảo</span>
+              <span class="ml-2 d-none d-lg-inline text-white small">Mạnh Duy</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="userDropdown">
@@ -176,35 +162,51 @@
                   <h6 class="m-0 font-weight-bold text-primary">Sửa khách hàng</h6>
                 </div>
                 <div class="card-body">
-                  <form action="" method="post" enctype="multipart/form-data"> <!-- Thêm enctype để upload file -->
+                  <form action="process_edit_customer.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                      <label for="customerName">Tên khách hàng</label>
-                      <input type="text" class="form-control" id="customerName" placeholder="Nhập tên khách hàng" required>
+                      <label for="customerId">ID</label>
+                      <input type="text" class="form-control" id="customerId" name="customerId" placeholder="Nhập ID" required>
                     </div>
-                  
+                    
                     <div class="form-group">
                       <label for="customerPhone">Số điện thoại</label>
-                      <input type="tel" class="form-control" id="customerPhone" placeholder="Nhập số điện thoại" required>
+                      <input type="tel" class="form-control" id="customerPhone" name="customerPhone" placeholder="Nhập số điện thoại" required>
                     </div>
-                  
+                    
                     <div class="form-group">
-                      <label for="customerAddress">Địa chỉ</label>
-                      <input type="text" class="form-control" id="customerAddress" placeholder="Nhập địa chỉ" required>
+                      <label for="driverLicenseId">ID bằng lái xe</label>
+                      <input type="text" class="form-control" id="driverLicenseId" name="driverLicenseId" placeholder="Nhập ID bằng lái xe" required>
                     </div>
-                  
+                    
                     <div class="form-group">
-                      <label for="customerEmail">Email</label> <!-- Thêm trường Email -->
-                      <input type="email" class="form-control" id="customerEmail" placeholder="Nhập địa chỉ email" required>
+                      <label for="customerEmail">Email</label>
+                      <input type="email" class="form-control" id="customerEmail" name="customerEmail" placeholder="Nhập email" required>
                     </div>
-                  
-                    <!-- Phần thêm ảnh khách hàng -->
+                    
                     <div class="form-group">
-                      <label for="customerImage">Ảnh khách hàng</label>
-                      <input type="file" class="form-control" id="customerImage" accept="image/*">
+                      <label for="fullName">Tên đầy đủ</label>
+                      <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Nhập tên đầy đủ" required>
                     </div>
-                  
+                    
+                    <div class="form-group">
+                      <label for="lastName">Họ</label>
+                      <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Nhập họ" required>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="firstName">Tên</label>
+                      <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Nhập tên" required>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="cccd">Số CCCD</label>
+                      <input type="text" class="form-control" id="cccd" name="cccd" placeholder="Nhập số CCCD" required>
+                    </div>
+
+                    
                     <button type="submit" class="btn btn-primary">Sửa khách hàng</button>
                   </form>
+                  
                   
                   
                 </div>
@@ -260,6 +262,7 @@
         </div>
         <!---Container Fluid-->
       </div>
+      
     </div>
   </div>
 
@@ -267,10 +270,12 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
-  <script src="{{url_for('static', filename='/vendor/jquery/jquery.min.js')}}"></script>
-  <script src="{{url_for('static', filename='/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-  <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
+
+  <script src="../../vendor/jquery/jquery.min.js"></script>
+  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../../js/ruang-admin.min.js"></script>
+
 </body>
 
 </html>
