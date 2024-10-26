@@ -11,7 +11,3 @@ def orders_add():
 @rootflaskapp.app.route('/orders_edit')
 def orders_edit():
     return rootflaskapp.render_template('views/orders/edit-order.html')
-
-@rootflaskapp.app.route('/orders_list_detail')
-def orders_list_detail():
-    return rootflaskapp.render_template('views/orders/list-order-detail.html')

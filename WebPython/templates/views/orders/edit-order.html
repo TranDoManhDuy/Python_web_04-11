@@ -167,7 +167,7 @@
                                         <form action="process_order.php" method="post" enctype="multipart/form-data">
                                             <div class="form-group">
                                               <label for="invoiceId">Mã số hóa đơn</label>
-                                              <input type="text" class="form-control" id="invoiceId" name="invoiceId" placeholder="Nhập mã số hóa đơn" required>
+                                              <input type="text" class="form-control" id="invoiceId" name="invoiceId" placeholder="Nhập mã số hóa đơn" required disabled>
                                             </div>
                                             
                                             <div class="form-group">
@@ -175,8 +175,8 @@
                                               <input type="date" class="form-control" id="orderDate" name="orderDate" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="employeeName">Tên nhân viên</label>
-                                                <input type="text" class="form-control" id="employeeName" placeholder="Nhập tên nhân viên">
+                                                <label for="employeeName">ID nhân viên</label>
+                                                <input type="text" class="form-control" id="employeeName" placeholder="Nhập ID nhân viên">
                                               </div>
                                             <div class="form-group">
                                               <label for="endTime">Thời gian kết thúc</label>
@@ -205,10 +205,6 @@
                                                 <option value="Đã thanh toán">Đã thanh toán</option>
                                               </select>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="employeeImage">Ảnh xe</label>
-                                                <input type="file" class="form-control" id="employeeImage" accept="image/*">
-                                              </div>
                                             <button type="submit" class="btn btn-primary">Cập nhật</button>
                                           </form>
                                     </div>
