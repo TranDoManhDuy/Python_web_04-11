@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="img/logo/logo.png" rel="icon">
+  <link href="{{url_for('static', filename='/img/logo/logo.png')}}" rel="icon">
   <title>Đăng nhập</title>
-  <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-  <link href="../../css/ruang-admin.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{url_for('static', filename='/vendor/fontawesome-free/css/all.min.css')}}" type="text/css">
+  <link rel="stylesheet" href="{{url_for('static', filename='/vendor/bootstrap/css/bootstrap.min.css')}}" type="text/css">
+  <link rel="stylesheet" href="{{url_for('static', filename='/css/ruang-admin.min.css')}}" type="text/css">
 
 </head>
 
@@ -59,10 +59,11 @@
     </div>
   </div>
   <!-- Login Content -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="js/ruang-admin.min.js"></script>
+  <script src="{{url_for('static', filename='/vendor/jquery/jquery.min.js')}}"></script>
+  <script src="{{url_for('static', filename='/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+  <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
+  <script src="{{url_for('static', filename='/handle/login.js')}}" ></script>
 </body>
 
 </html>
