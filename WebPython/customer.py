@@ -16,6 +16,7 @@ def takedata(lenh):  # lenh truy van sql
         respon = c.fetchall()
         return respon
 
+
 def pushdata(lenh):  # lenh truy van sql
     with sqlite3.connect('WebPython/data.db') as conn:
         c = conn.cursor()
@@ -33,27 +34,55 @@ class Name:
         self.Lname = Lname
 
     def __str__(self):
-        return f"Name: {self.Lname} {self.Fname}"
+        if self == None:
+            return "This name is None"
+        else:
+            return f"Name: {self.Lname} {self.Fname}"
 
 
-class Client:  # khach hang so it
-    def __init__(self, Id, Lname, Fname, email,  phone, IDlicense):
-        self.__Id = Id
+class Customer:  # khach hang so it
+    def __init__(self, SSN, Lname, Fname, IDlicense, email,  Phone):
+        self.__Id = None   # sẽ sinh tự động "000000000 - 999999999"
+        self.__SSN = str(SSN)  # unique
         self.__name = Name(Lname, Fname)
-        if validate_email(email) == True:
+        self.__Idlicense = IDlicense  # unique
+        if email == None:
+            self.__email = None
+        elif validate_email(email) == True:
             self.__email = email
         else:
             self.__email = "Email is not valid"
-        self.__phone = phone
-        self.__Idlicense = IDlicense
+        self.__phone = Phone
+
     def __str__(self):
-        return f"Id: {self.__Id}, Name: {self.__name}, Email: {self.__email}, Phone: {self.__phone}, Idlicense: {self.__Idlicense}"
+        return f"Id: {self.__Id}, SSN: {self.__SSN}, Name: {self.__name}, Idlicense: {self.__Idlicense}, Email: {self.__email}, Phone: {self.__phone}"
+
+    def setCustomer(self, customer):
+        # customer = Customer(customer)
+        self.__SSN = customer.getSSN() if customer.getSSN() != None else self.__SSN
+        self.__name.Fname = customer.getName().Fname if customer.getName(
+        ).Fname != None else self.__name.Fname
+        self.__name.Lname = customer.getName().Lname if customer.getName(
+        ).Lname != None else self.__name.Lname
+        self.__Idlicense = customer.getIdlicense(
+        ) if customer.getIdlicense() != None else self.__Idlicense
+        self.__email = customer.getEmail() if customer.getEmail() != None else self.__email
+        self.__phone = customer.getPhone() if customer.getPhone() != None else self.__phone
 
     def getId(self):
         return self.__Id
 
+    def setId(self, Id):
+        self.__Id = Id
+
+    def getSSN(self):
+        return self.__SSN
+
     def getName(self):
         return self.__name
+
+    def getIdlicense(self):
+        return self.__Idlicense
 
     def getEmail(self):
         return self.__email
@@ -61,70 +90,69 @@ class Client:  # khach hang so it
     def getPhone(self):
         return self.__phone
 
-    def getIdlicense(self):
-        return self.__Idlicense
 
+class Customers:  # khach hang so nhieu
+    oldestId = 0
 
-class Clients:  # khach hang so nhieu
     def __init__(self):
-        self.__clients = []
-        data = takedata("SELECT * FROM khachhang")
-        for i in data:
-            client = Client(i[0], i[1], i[2], i[3], i[4], i[5])
-            self.__clients.append(client)
+        self.__customers = []
 
-    def addClient(self, client):  # thêm khách hàng
-        if not isinstance(client, Client):
-            print("client is not instance of Client")
-        elif [] != list(filter(lambda x: x.getId() == client.getId(), self.__clients)):
-            print("Id is exist")
-        elif [] != list(filter(lambda x: x.getIdlicense() == client.getIdlicense(), self.__clients)):
+    def addClient(self, customer):  # thêm khách hàng
+        if not isinstance(customer, Customer):
+            print("customer is not instance of Customer")
+        elif [] != list(filter(lambda x: x.getSSN() == customer.getSSN(), self.__customers)):
+            print("SSN is exist")
+        elif [] != list(filter(lambda x: x.getIdlicense() == customer.getIdlicense(), self.__customers)):
             print("Idlicense is exist")
-        elif client.getEmail() == "Email is not valid":
+        elif customer.getEmail() == "Email is not valid":
             print("Email is not valid")
         else:
-            self.__clients.append(client)
-            pushdata(f"INSERT INTO khachhang VALUES ({client.getId()}, '{client.getName().Lname}', '{
-                     client.getName().Fname}', '{client.getEmail()}', '{client.getPhone()}', '{client.getIdlicense()}')")
+            Customers.oldestId += 1
+            customer.setId(str(Customers.oldestId).zfill(9))
+            self.__customers.append(customer)
             return True
         return False
 
     def getClients(self):
-        return self.__clients
+        return self.__customers
 
-    def getClientOfId(self, Id):  # lấy thông tin khách hàng theo Id
-        a = list(filter(lambda x: x.getId() == Id, self.__clients))
+    def getCustomersOfId(self, Id):  # lấy thông tin khách hàng theo Id
+        a = list(filter(lambda x: x.getId() == Id, self.__customers))
+        if a == []:
+            return None
+        return a[0]
+
+    def getClientOfSSN(self, SSN):  # lấy thông tin khách hàng theo SSN
+        a = list(filter(lambda x: x.getSSN() == SSN, self.__customers))
         if a == []:
             return None
         return a[0]
 
     def getClientOfIndex(self, index):  # lấy thông tin khách hàng theo index
-        return self.__clients[index]
+        return self.__customers[index]
 
-    def updateClient(self, Id, client):  # sửa thông tin khách hàng
-        if not isinstance(client, Client):
-            print("client is not instance of Client")
-        elif self.getClientOfId(Id) == None:
-            print("Id is not exist")
-        elif self.getClientOfId(Id).getId() != client.getId():
-            print("client is exist")
+    def updateClient(self, Id, customer):  # sửa thông tin khách hàng
+        if not isinstance(customer, Customer):
+            print("customer is not instance of Customers")
+        elif [] != list(filter(lambda x: x.getIdlicense() == customer.getIdlicense(), self.__customers)):
+            print("Idlicense is exist")
+        elif [] != list(filter(lambda x: x.getSSN() == customer.getSSN(), self.__customers)):
+            print("SSN is exist")
         else:
-            self.__clients[self.__clients.index(
-                self.getClientOfId(Id))] = client
-            pushdata(f"UPDATE khachhang SET soCCCD = {client.getId()}, ho = '{client.getName().Lname}', ten = '{client.getName().Fname}', email = '{
-                     client.getEmail()}', sdt = '{client.getPhone()}', idBanglaixe = '{client.getIdlicense()}' WHERE soCCCD = {Id}")
+            self.__customers[self.__customers.index(
+                self.getClientOfId(Id))].setCustomer(customer)
             return True
         return False
 
     def removeIndex(self, index):  # chac la khong sài dau
-        self.__clients.pop(index)
+        self.__customers.pop(index)
 
     def removeId(self, Id):  # chac la khong sài dau
-        a = list(filter(lambda x: x.Id == Id, self.__clients))
-        self.__clients.remove(a[0])
+        a = list(filter(lambda x: x.Id == Id, self.__customers))
+        self.__customers.remove(a[0])
 
     def __str__(self):
-        return f"{self.__clients}"
+        return f"{self.__customers}"
 # /////////////////////regex, hỗ trợ tìm kiếm///////////////////////
 
 
@@ -156,16 +184,23 @@ def searchOpen(ds, code):
 # /////////////////////test////////////////////////////////////
 if __name__ == "__main__":
     print('test')
+    customers = Customers()
+    customers.addClient(Customer("000000001", "Nguyen", "Van A",
+                        "123456789", "123456789@gmail.com", "123456789"))
+    customers.addClient(Customer("000000002", "Tran", "Van B",
+                        "123456780", "123456789@gmail.com", "123456789"))
 
-    # clients = Clients()
-    # m = clients.getClientOfId('898603590447')
-    # n = Client('898603590447', m.getName().Lname, "Anh",
-    #            m.getEmail(), "1112111111", m.getIdlicense())
-    # clients.updateClient(str(898603590447), n)
-    # print("\n".join(map(str, clients.getClients())))
-
-# ////////////////////////////////////////////////////////////
-
+    customers.addClient(Customer("000000003", "Trinh", "Van C",
+                        "123455781", "123456789@gmail.com", "123456789"))
+    customers.addClient(Customer("000000005", "Vo", "Van D",
+                        "123455782", "123456789@gmail.com", "123456789"))
+    print('\n'.join(map(str, customers.getClients())))
+    print('-----------------------------')
+    a = customers.getClientOfSSN('000000005').getId()
+    customers.updateClient(a, Customer(
+        "000000007", None, None, "123456782", None, None))
+    print('\n'.join(map(str, customers.getClients())))
+    # ////////////////////////////////////////////////////////////
 
 @rootflaskapp.app.route('/customer_list')
 def customer_list():

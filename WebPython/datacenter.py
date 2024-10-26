@@ -13,3 +13,4 @@ def pushdata(lenh):  # lenh truy van sql
         c.execute(lenh)
         conn.commit()
         return True
+
