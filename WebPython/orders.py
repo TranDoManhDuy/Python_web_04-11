@@ -1,4 +1,7 @@
 import rootflaskapp
+import products
+import users
+import customer
 
 @rootflaskapp.app.route('/orders_list')
 def orders_list():
