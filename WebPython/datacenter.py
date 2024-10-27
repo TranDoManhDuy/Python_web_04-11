@@ -57,6 +57,7 @@ def takedata(lenh):  # lenh truy van sql
         return respon
     
 def pushdata(lenh):  # lenh truy van sql
+    print(lenh)
     with sqlite3.connect('WebPython/data.db') as conn:
         c = conn.cursor()
         c.execute(lenh)

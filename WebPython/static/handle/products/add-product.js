@@ -71,6 +71,7 @@ registrationNumberInput.addEventListener('blur', function() {
         }
     })
 })
+
 vehicleNameInput.addEventListener('blur', function(event) {
     if (vehicleNameInput.value == '') {
         messageVehicleName.innerHTML = 'Vehicle name is required'
@@ -130,7 +131,6 @@ vehiclePriceInput.addEventListener('keyup', function(event) {
     }
 })
 
-
 buttonSubmit.addEventListener('click', function() {
     if (canSubmit && registrationNumberInput.value != '' && vehicleNameInput.value != '' && vehicleSeatsInput.value != '' && vehiclePriceInput.value != '' && vehicleStatusInput.value != '') {
         fetch('/addVehicle', {
@@ -162,6 +162,7 @@ buttonSubmit.addEventListener('click', function() {
                 vehicleStatusInput.value = ''
                 getNextVehicleCode()
                 location.reload()
+                window.location.href = '/products_list'
             }
             else {
                 alert('Add vehicle fail')

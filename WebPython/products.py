@@ -238,22 +238,33 @@ phuongtienSC = phuongtien()
 def getIDForFix():
     if rootflaskapp.request.method == "POST":
         data = rootflaskapp.request.get_json()
+        print(data, "DATA_____________________________")
         pt = danhsachPT.layPttheoID(data["id"]).to_dict()
         global phuongtienSC
         phuongtienSC = pt
-        print(phuongtienSC, "--------------------")
         return rootflaskapp.jsonify({"status": "success", "pt": pt})
 
 @rootflaskapp.app.route("/getPT", methods=["GET"])
 def getPT():
-    print(phuongtienSC)
     return rootflaskapp.jsonify(phuongtienSC)
 
 @rootflaskapp.app.route("/chuyentrang_fixProduct", methods=["GET"])
 def chuyentrang_fixProduct():
     return rootflaskapp.redirect(rootflaskapp.url_for("products_edit"))
 
-# cac ham run khi tai trang      
+@rootflaskapp.app.route("/fixVehicle", methods=["POST"])
+def fixVehicle():
+    if rootflaskapp.request.method == "POST":
+        data = rootflaskapp.request.get_json()
+        execute = """
+            UPDATE VEHICLE
+            SET Category = '{}', Type = '{}', RegistrationPlate = '{}', VName = '{}', SeatNumber = {}, Rent = {}, Status = {}
+            WHERE ID = '{}'
+        """
+        datacenter.pushdata(execute.format(data["danhmuc"], data["loaiphuongtien"], data["sodangki"], data["tenphuongtien"], data["sochongoi"], data["giathue1n"], data["tinhtrangxe"], int(data["id"])))
+        fetchDataFromDB()
+        return rootflaskapp.redirect(rootflaskapp.url_for("products_list"))
+# cac ham run khi tai trang
 def run_product():
     fetchDataFromDB()
 run_product()

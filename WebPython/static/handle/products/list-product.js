@@ -22,7 +22,7 @@ let listProduct = {}
 
 // Cac ham xu ly
 function getIDForFix(id) {
-    console.log(id)
+    id = Number(id)
     fetch("/getIDForFix", {
         method: 'POST',
         headers: {
@@ -40,7 +40,6 @@ function getIDForFix(id) {
             fetch("/chuyentrang_fixProduct")
             .then(function (response) { 
                 if (response.redirected) {
-                    console.log(data.pt)
                     window.location.href = response.url
                 }
             })
@@ -54,19 +53,20 @@ function renderListProduct(listProduct) {
         listContainer.innerHTML = `<tr><td colspan="9">Không có dữ liệu</td></tr>`
     }
     for (let i = 0; i < listProduct.length; i++) {
-        product = listProduct[i]
+        console.log(listProduct[i].id)
+        productI = listProduct[i]
         listContainer.innerHTML += 
         `<tr>
-            <td>#${product.id}</td>
-            <td>${product.danhmuc}</td>
-            <td>${product.loaiphuongtien}</td>
-            <td>${product.sodangki}</td>
-            <td>${product.tenphuongtien}</td>
-            <td>${product.sochongoi}</td>
-            <td>${product.giathue1n} VNĐ</td>
-            <td>${product.tinhtrangxe}%</td>
+            <td>#${productI.id}</td>
+            <td>${productI.danhmuc}</td>
+            <td>${productI.loaiphuongtien}</td>
+            <td>${productI.sodangki}</td>
+            <td>${productI.tenphuongtien}</td>
+            <td>${productI.sochongoi}</td>
+            <td>${productI.giathue1n} VNĐ</td>
+            <td>${productI.tinhtrangxe}%</td>
             <td>
-            <div style="cursor: pointer" class="btn btn-sm btn-primary" onclick=getIDForFix(${product.id})>Sửa</div>
+            <div style="cursor: pointer" class="btn btn-sm btn-primary" onclick=getIDForFix('${productI.id}')>Sửa</div>
             </td>
         </tr>`
     }
