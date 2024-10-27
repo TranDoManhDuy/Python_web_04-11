@@ -1,6 +1,6 @@
 import rootflaskapp
-import sqlite3
 import re
+import datacenter
 # them, sua, khởi tạo lấy duư liệu từ sql (xong)
 # regex (xong)
 # ho tro tim kiem
@@ -23,31 +23,36 @@ class Name:
 class Customer:  # khach hang so it
     def __init__(self, SSN, Lname, Fname, IDlicense, email,  Phone):
         self.__Id = None   # sẽ sinh tự động "000000000 - 999999999"
-        self.__SSN = str(SSN)  # unique
+        self.__SSN = str(SSN) if len(
+            str(SSN)) == 12 else None    # unique 12 so
         self.__name = Name(Lname, Fname)
-        self.__Idlicense = IDlicense  # unique
+        self.__Idlicense = str(IDlicense) if len(
+            str(IDlicense)) == 12 else None  # unique 12 so
         if email == None:
             self.__email = None
         elif validate_email(email) == True:
             self.__email = email
         else:
             self.__email = "Email is not valid"
-        self.__phone = Phone
+        self.__phone = str(Phone) if len(
+            str(Phone)) == 10 else None  # unique 10 so
 
     def __str__(self):
         return f"Id: {self.__Id}, SSN: {self.__SSN}, Name: {self.__name}, Idlicense: {self.__Idlicense}, Email: {self.__email}, Phone: {self.__phone}"
 
     def setCustomer(self, customer):
         # customer = Customer(customer)
-        self.__SSN = customer.getSSN() if customer.getSSN() != None else self.__SSN
+        self.__SSN = customer.getSSN() if customer.getSSN() != None and len(
+            customer.getSSN()) == 12 else self.__SSN
         self.__name.Fname = customer.getName().Fname if customer.getName(
         ).Fname != None else self.__name.Fname
         self.__name.Lname = customer.getName().Lname if customer.getName(
         ).Lname != None else self.__name.Lname
         self.__Idlicense = customer.getIdlicense(
-        ) if customer.getIdlicense() != None else self.__Idlicense
+        ) if customer.getIdlicense() != None and len(customer.getIdlicense) == 12 else self.__Idlicense
         self.__email = customer.getEmail() if customer.getEmail() != None else self.__email
-        self.__phone = customer.getPhone() if customer.getPhone() != None else self.__phone
+        self.__phone = customer.getPhone() if customer.getPhone(
+        ) != None and len(customer.getPhone()) == 10 else self.__phone
 
     def getId(self):
         return self.__Id
@@ -76,20 +81,31 @@ class Customers:  # khach hang so nhieu
 
     def __init__(self):
         self.__customers = []
+        data = datacenter.takedata('SELECT * FROM CUSTOMER')
+        if data != []:  # nếu chưa có dữ liệu
+            for i in data:
+                da = Customer(i[1], i[2], i[3], i[4], i[5], i[6])
+                da.setId(i[0])
+                self.__customers.append(da)
+            self.oldestId = int(data[1][0])
 
-    def addClient(self, customer):  # thêm khách hàng
+    def addCutomer(self, customer):  # thêm khách hàng
         if not isinstance(customer, Customer):
             print("customer is not instance of Customer")
-        elif [] != list(filter(lambda x: x.getSSN() == customer.getSSN(), self.__customers)):
+        elif [] != list(filter(lambda x: x.getSSN() == customer.getSSN(), self.__customers)) or customer.getSSN() == None:
             print("SSN is exist")
-        elif [] != list(filter(lambda x: x.getIdlicense() == customer.getIdlicense(), self.__customers)):
+        elif [] != list(filter(lambda x: x.getIdlicense() == customer.getIdlicense(), self.__customers)) or customer.getIdlicense() == None:
             print("Idlicense is exist")
         elif customer.getEmail() == "Email is not valid":
             print("Email is not valid")
+        elif customer.getPhone() == None:
+            print("Phone is not valid")
         else:
             Customers.oldestId += 1
             customer.setId(str(Customers.oldestId).zfill(9))
             self.__customers.append(customer)
+            datacenter.pushdata(f"INSERT INTO CUSTOMER VALUES ('{customer.getId()}', '{customer.getSSN()}', '{
+                                customer.getName().Lname}', '{customer.getName().Fname}', '{customer.getIdlicense()}', '{customer.getEmail()}', '{customer.getPhone()}')")
             return True
         return False
 
@@ -119,17 +135,14 @@ class Customers:  # khach hang so nhieu
         elif [] != list(filter(lambda x: x.getSSN() == customer.getSSN(), self.__customers)):
             print("SSN is exist")
         else:
-            self.__customers[self.__customers.index(
-                self.getClientOfId(Id))].setCustomer(customer)
+            customer_need_update = self.getCustomersOfId(Id)
+            customer_need_update.setCustomer(customer)
+            # print(f"UPDATE CUSTOMER SET SSN = {customer_need_update.getSSN()}, LastName = {customer_need_update.getName().Lname}, FistName = {customer_need_update.getName(
+            # ).Fname}, License = {customer_need_update.getIdlicense()}, Email = {customer_need_update.getEmail()}, PhoneNumber = {customer_need_update.getPhone()} WHERE Id = {Id}")
+            datacenter.pushdata(f"UPDATE CUSTOMER SET SSN = '{customer_need_update.getSSN()}', LastName = '{customer_need_update.getName().Lname}', FirstName = '{customer_need_update.getName(
+            ).Fname}', License = '{customer_need_update.getIdlicense()}', Email = '{customer_need_update.getEmail()}', PhoneNumber = '{customer_need_update.getPhone()}' WHERE Id = '{Id}'")
             return True
         return False
-
-    def removeIndex(self, index):  # chac la khong sài dau
-        self.__customers.pop(index)
-
-    def removeId(self, Id):  # chac la khong sài dau
-        a = list(filter(lambda x: x.Id == Id, self.__customers))
-        self.__customers.remove(a[0])
 
     def __str__(self):
         return f"{self.__customers}"
@@ -162,33 +175,29 @@ def searchOpen(ds, code):
 
 
 # /////////////////////test////////////////////////////////////
-if __name__ == "__main__":
-    print('test')
-    customers = Customers()
-    customers.addClient(Customer("000000001", "Nguyen", "Van A",
-                        "123456789", "123456789@gmail.com", "123456789"))
-    customers.addClient(Customer("000000002", "Tran", "Van B",
-                        "123456780", "123456789@gmail.com", "123456789"))
-
-    customers.addClient(Customer("000000003", "Trinh", "Van C",
-                        "123455781", "123456789@gmail.com", "123456789"))
-    customers.addClient(Customer("000000005", "Vo", "Van D",
-                        "123455782", "123456789@gmail.com", "123456789"))
-    print('\n'.join(map(str, customers.getClients())))
-    print('-----------------------------')
-    a = customers.getClientOfSSN('000000005').getId()
-    customers.updateClient(a, Customer(
-        "000000007", None, None, "123456782", None, None))
-    print('\n'.join(map(str, customers.getClients())))
+# if __name__ == "__main__":
+#     print('test')
+#     customers = Customers()
+#     print('\n'.join(map(str, customers.getClients())))
+#     print('-----------------------------')
+#     a = customers.getClientOfSSN('012345678915').getId()
+#     customers.updateClient(a, Customer(
+#         "012345678910", None, None, None, None, None))
+#     print('\n'.join(map(str, customers.getClients())))
     # ////////////////////////////////////////////////////////////
+# khởi tạo dữ liệu Customers
+flaskCustomers = Customers()
+
 
 @rootflaskapp.app.route('/customer_list')
 def customer_list():
     return rootflaskapp.render_template('views/customer/list-customer.html')
 
+
 @rootflaskapp.app.route('/customer_edit')
 def customer_edit():
     return rootflaskapp.render_template('views/customer/edit-customer.html')
+
 
 @rootflaskapp.app.route('/customer_add')
 def customer_add():
