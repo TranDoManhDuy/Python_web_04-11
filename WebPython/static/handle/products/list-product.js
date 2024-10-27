@@ -11,7 +11,6 @@
         <a href="../products/edit-product.html" class="btn btn-sm btn-primary">Sửa</a>
     </td>
 </tr> */}
-
 listContainer = document.querySelector('#LIST_PRODUCT_CONTAINER')
 inputVNameSearch = document.querySelector('#inputVNameSearch')
 buttonSearch = document.querySelector('#buttonSearch')
@@ -22,6 +21,33 @@ themPT = document.querySelector('#themPT')
 let listProduct = {}
 
 // Cac ham xu ly
+function getIDForFix(id) {
+    console.log(id)
+    fetch("/getIDForFix", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id
+        })
+    })
+    .then(function (response) { 
+        return response.json()
+    })
+    .then(data => {
+        if (data.status == "success") {
+            fetch("/chuyentrang_fixProduct")
+            .then(function (response) { 
+                if (response.redirected) {
+                    console.log(data.pt)
+                    window.location.href = response.url
+                }
+            })
+        }
+    })
+}
+
 function renderListProduct(listProduct) { 
     listContainer.innerHTML = ''
     if (listProduct.length == 0) {
@@ -29,7 +55,20 @@ function renderListProduct(listProduct) {
     }
     for (let i = 0; i < listProduct.length; i++) {
         product = listProduct[i]
-        listContainer.innerHTML += `<tr><td>#${product.id}</td><td>${product.danhmuc}</td><td>${product.loaiphuongtien}</td><td>${product.sodangki}</td><td>${product.tenphuongtien}</td><td>${product.sochongoi}</td><td>${product.giathue1n} VNĐ</td><td>${product.tinhtrangxe}%</td><td><a href="../products/edit-product.html" class="btn btn-sm btn-primary">Sửa</a></td></tr>`
+        listContainer.innerHTML += 
+        `<tr>
+            <td>#${product.id}</td>
+            <td>${product.danhmuc}</td>
+            <td>${product.loaiphuongtien}</td>
+            <td>${product.sodangki}</td>
+            <td>${product.tenphuongtien}</td>
+            <td>${product.sochongoi}</td>
+            <td>${product.giathue1n} VNĐ</td>
+            <td>${product.tinhtrangxe}%</td>
+            <td>
+            <div style="cursor: pointer" class="btn btn-sm btn-primary" onclick=getIDForFix(${product.id})>Sửa</div>
+            </td>
+        </tr>`
     }
 }
 function fetchListProduct() {

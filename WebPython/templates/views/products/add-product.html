@@ -78,8 +78,8 @@
           data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Thao tác</h6>
-              <a class="collapse-item" href="../products/list-product.html">Danh sách</a>
-              <a class="collapse-item" href="../products/add-product.html">Thêm</a>
+              <div class="collapse-item" id="chuyentrangDSPT">Danh sách</div>
+              <div class="collapse-item" id="reloadAddPT">Thêm</div>
           </div>
       </div>
   </li>
@@ -165,7 +165,7 @@
                   <form action="process_vehicle.php" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                       <label for="vehicleCode">Mã số xe</label>
-                      <input type="text" class="form-control" id="vehicleCode" name="vehicleCode" placeholder="Nhập mã số xe" required>
+                      <input type="text" class="form-control" id="vehicleCode" name="vehicleCode" placeholder="Nhập mã số xe" required disabled>
                     </div>
                     <div class="form-group">
                       <label for="vehicleCategory">Danh mục</label>
@@ -186,7 +186,7 @@
                       <label for="vehicleType">Loại xe</label>
                       <select id="vehicleType" name="vehicleType" class="form-control" required>
                         <option value="Sedan">Sedan</option>
-                        <option value="SUV">Suv</option>
+                        <option value="SUV">SUV</option>
                         <option value="Hatchback">Hatchback</option>
                         <option value="Coupe">Coupe</option>
                         <option value="Minivan">Minivan</option>
@@ -199,27 +199,31 @@
                     </div>
                     <div class="form-group">
                       <label for="registrationNumber">Số đăng ký</label>
+                      <div id="messageCheckRegistrationNumber" style="color: red; font-style: italic; font-size: 10px"></div>
                       <input type="text" class="form-control" id="registrationNumber" name="registrationNumber" placeholder="Nhập số đăng ký" required>
                     </div>
                     <div class="form-group">
                       <label for="vehicleName">Tên xe</label>
+                      <div id="messageCheckVehicleName" style="color: red; font-style: italic; font-size: 10px"></div>
                       <input type="text" class="form-control" id="vehicleName" name="vehicleName" placeholder="Nhập tên xe" required>
                     </div>
                     <div class="form-group">
                       <label for="vehicleSeats">Số chỗ ngồi</label>
+                      <div id="messageVehicleSeats" style="color: red; font-style: italic; font-size: 10px"></div>
                       <input type="number" class="form-control" id="vehicleSeats" name="vehicleSeats" placeholder="Nhập số chỗ ngồi" required>
                     </div>
                     <div class="form-group">
                       <label for="vehiclePrice">Giá thuê trong 1 ngày</label>
-                      <input type="text" class="form-control" id="vehiclePrice" name="vehiclePrice" placeholder="Nhập giá thuê" required>
+                      <div id="messageVehiclePrice" style="color: red; font-style: italic; font-size: 10px"></div>
+                      <input type="number" class="form-control" id="vehiclePrice" name="vehiclePrice" placeholder="Nhập giá thuê" required>
                     </div>
                     <div class="form-group">
-                      <label for="vehicleStatus">Tình trạng xe</label>
-                      <input type="text" placeholder="%" class="form-control">
+                      <label for="vehicleStatus">Tình trạng xe (%)</label>
+                      <div id="messageVehicleStatus" style="color: red; font-style: italic; font-size: 10px"></div>
+                      <input type="number" placeholder="%" class="form-control" id="vehicleStatus" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Thêm xe</button>
+                    <button type="button" class="btn btn-primary" id="buttonSubmit">Thêm xe</button>
                   </form>
-                  
                 </div>
               </div>
             </div>
@@ -268,5 +272,4 @@
   <script src="{{url_for('static', filename='/handle/products/add-product.js')}}"></script>
 
 </body>
-
 </html>
