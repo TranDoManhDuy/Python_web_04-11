@@ -1,11 +1,12 @@
 import rootflaskapp
-import rootflaskapp
 import datetime
-import sqlite3
+import datacenter
+import customer as cus  # import customer
 import enum
+
 # them, sua, khởi tạo lấy duư liệu từ sql
 # lấy dữ liệu từ sql
-# 
+#
 # ///////////////////////////////////////////////////////////
 
 
@@ -38,19 +39,15 @@ class Time:
 
 
 class Status(enum.Enum):
-
     chua_thanh_toan = 0
     da_thanh_toan = 1
-
-    def __str__(self):
-        return self.value
 
 
 # /////////////////////hóa đơn////////////////////////////////////
 
 
 class Order:  # hóa đơn số ít
-    def __init__(self, id_Staff, SSN_Customer, id_Products, date_of_booking, date_of_end,  status):
+    def __init__(self, id_Staff, SSN_Customer, id_Products, date_of_booking, date_of_end, status):
         self.__Id = None  # sẽ sinh tự động "000000000 - 999999999"
         self.__id_Staff = str(id_Staff)  # foreign key
         self.__SSN_Customer = str(SSN_Customer)  # foreign key
@@ -61,12 +58,14 @@ class Order:  # hóa đơn số ít
         if self.__date_of_booking.compareTime(self.__date_of_end) == True:
             self.__date_of_end = None
         self.__unit_price = None
-        self.__status = Status(status)
+        self.__status = Status(status)  # có thể lỗi
 
     def setOrder(self, order):
+        order = Order(order)
         self.__id_Staff = order.getIdStaff() if order.getIdStaff() != None else self.__id_Staff
-        self.__id_Customer = order.getIdCustomer(
-        ) if order.getIdCustomer() != None else self.__id_Customer
+        # check xem co ton tai khach hang ko
+        self.__SSN_Customer = order.getSSNCustomer() if order.getSSNCustomer(
+        ) != None and cus.flaskCustomers.getClientOfSSN(order.getSSNCustomer()) != None else self.__SSN_Customer
         self.__id_Products = order.getIdProducts(
         ) if order.getIdProducts() != None else self.__id_Products
         self.__date_of_booking = order.getDateOfBooking(
@@ -84,8 +83,8 @@ class Order:  # hóa đơn số ít
     def getIdStaff(self):
         return self.__id_Staff
 
-    def getIdCustomer(self):
-        return self.__id_Customer
+    def getSSNCustomer(self):
+        return self.__SSN_Customer
 
     def getIdProducts(self):
         return self.__id_Products
@@ -111,6 +110,11 @@ class Orders:  # hóa đơn số nhiều
 
     def __init__(self):
         self.__list_order = []
+        data = datacenter.takedata("SELECT * FROM ORDERS")
+        for i in data:
+            da = Order(i[1], i[2], i[3], i[4], i[5], i[6])
+            da.setIdOrder(i[0])
+            self.__list_order.append(da)
 
     def getListOrder(self):
         return self.__list_order
@@ -125,18 +129,25 @@ class Orders:  # hóa đơn số nhiều
     def addOrder(self, order):
         if not isinstance(order, Order):
             print("order is not instance of order")
-            # dung lenh sql check id_cutomer, id_products, id_staff ton tai hay ko
+        elif cus.flaskCustomers.getClientOfSSN(order.getSSNCustomer()) == None:
+            # check id_customer ton tai hay ko
+            print("Customer is not exist")
+            # chua check id_products, id_staff ton tai hay ko
         else:
             self.oldest_id += 1
             order.setIdOrder(self.oldest_id)
             self.__list_order.append(order)
+            datacenter.pushdata(f"INSERT INTO ORDERS VALUES ('{order.getId()}', '{order.getIdStaff()}', '{order.getSSNCustomer()}', '{
+                                order.getIdProducts()}', '{order.getDateOfBooking()}', '{order.getDateOfEnd()}', '{order.getStatus()}')")
             return True
         return False
 
     def updateOrder(self, id, order):
         if not isinstance(order, Order):
             print("order is not instance of order")
-            # dung lenh sql check id_cutomer, id_products, id_staff ton tai hay ko
+        elif cus.flaskCustomers.getClientOfSSN(order.getSSNCustomer()) == None and order.getSSNCustomer() != None:
+            print("Customer is not exist")  # check id_customer ton tai hay ko
+            # chua check id_products, id_staff ton tai hay ko
         else:
             self.getOrderOfId(id).setOrder(order)
             return True
