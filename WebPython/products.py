@@ -94,16 +94,19 @@ class danhsachphuongtien():
     def layDSPttheoTen(self, tenphuongtien):
         dspt = []
         for pt in self.__danhsachphuongtien:
-            if pt.getTenphuongtien() == tenphuongtien:
-                dspt.append(pt)
+            if tenphuongtien in pt.getTenphuongtien():
+                dspt.append(pt.to_dict())
         return dspt
     def getlist(self):
         return [pt.to_dict() for pt in self.__danhsachphuongtien]
+    def clearList(self):
+        self.__danhsachphuongtien.clear()
     
 danhsachPT = danhsachphuongtien()
 def fetchDataFromDB():
     command = "SELECT * FROM VEHICLE"
     data = datacenter.takedata(command)
+    danhsachPT.clearList()
     for i in data:
         pt = phuongtien()
         pt.setId(str(i[0]).rjust(5, "0"))
@@ -116,10 +119,10 @@ def fetchDataFromDB():
         pt.setTinhtrangxe(i[7])
         danhsachPT.themphuongtien(pt)
         
-        
 @rootflaskapp.app.route("/products_getListPT", methods=["GET"])
 def products_getListPT():
     if rootflaskapp.request.method == "GET":
+        fetchDataFromDB()
         return rootflaskapp.jsonify(danhsachPT.getlist())
     
 @rootflaskapp.app.route("/products_addPT", methods=["POST"])
@@ -149,6 +152,7 @@ def products_getPT():
 @rootflaskapp.app.route("/products_getListPTtheoTen", methods=["POST"])
 def products_getListPTtheoTen():
     if rootflaskapp.request.method == "POST":
+        print(rootflaskapp.request.get_json()["tenphuongtien"])
         data = rootflaskapp.request.get_json()
         dspt = danhsachPT.layDSPttheoTen(data["tenphuongtien"])
         return rootflaskapp.jsonify(dspt)
@@ -168,12 +172,16 @@ def products_updatePT():
         pt.setDanhmuc(data["danhmuc"])
         return rootflaskapp.jsonify({"status": "success"})
 
-
-      
+# cac ham run khi tai trang      
 def run_product():
     fetchDataFromDB()
-    danhsachPT = danhsachphuongtien()
 run_product()
+
+# chuyen qua trang them phuong tien
+@rootflaskapp.app.route("/chuyentrang_addProduct")
+def chuyentrang_addProduct():
+    return rootflaskapp.redirect(rootflaskapp.url_for("products_add"))
+
 
 @rootflaskapp.app.route("/products_list")
 def products_list():

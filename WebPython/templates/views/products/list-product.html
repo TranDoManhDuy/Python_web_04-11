@@ -78,8 +78,8 @@
           data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Thao tác</h6>
-              <a class="collapse-item" href="../products/list-product.html">Danh sách</a>
-              <a class="collapse-item" href="../products/add-product.html">Thêm</a>
+              <div class="collapse-item" id="chuyentrangDSPT">Danh sách</div>
+              <div class="collapse-item" id="themPT">Thêm</div>
           </div>
       </div>
   </li>
@@ -155,8 +155,8 @@
           </div>
           <div class="card bg-white mb-3">
             <form action="" class="form p-3">
-              <input class="form-control" type="text" placeholder="Tìm kiếm">
-              <button class="btn btn-primary mt-2">Tìm kiếm</button>
+              <input class="form-control" type="text" placeholder="Tìm kiếm theo tên xe" id="inputVNameSearch">
+              <button class="btn btn-primary mt-2" id="buttonSearch">Tìm kiếm</button>
             </form>
           </div>
           <div class="row">
