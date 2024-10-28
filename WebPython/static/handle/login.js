@@ -29,6 +29,9 @@ btnSubmit.addEventListener('click', function() {
             console.log(data)
         }
     })
+    .finally(function() {
+        console.log('Done')
+    })
 })
 
 inputEmail.addEventListener('keydown', function(event) {

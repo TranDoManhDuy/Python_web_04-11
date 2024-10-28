@@ -1,5 +1,5 @@
 import rootflaskapp
-
+import email_automatic
 emailAdmin = "admin"
 passwordAdmin = "admin"
 
@@ -14,3 +14,8 @@ def login_post():
 @rootflaskapp.app.route("/")
 def login():
     return rootflaskapp.render_template("views/login.html")
+
+@rootflaskapp.app.route("/testEmail")
+def testEmail():
+    email_automatic.test()
+    return rootflaskapp.jsonify("Test email")
