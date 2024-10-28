@@ -17,6 +17,10 @@ messageVehiclePrice = document.getElementById('messageVehiclePrice')
 chuyentrangDSPT = document.getElementById('chuyentrangDSPT')
 reloadAddPT = document.getElementById('reloadAddPT')
 
+reloadAddPTBtn = document.getElementById('reloadAddPT')
+chuyentrangDSPTBtn = document.getElementById('chuyentrangDSPT')
+
+console.log(reloadAddPTBtn, chuyentrangDSPTBtn)
 // xu ly cac su kien
 reloadAddPT.addEventListener('click', function() {
     location.reload()
@@ -187,7 +191,18 @@ buttonSubmit.addEventListener('click', function() {
         }
     }
 })
-
+reloadAddPTBtn.addEventListener('click', function() {
+    location.reload()
+})
+chuyentrangDSPTBtn.addEventListener('click', function() {
+    fetch("/chuyentrangDSPT")
+    .then(function(response) {
+        console.log(response)
+        if (response.redirected) {
+            window.location.href = response.url
+        }
+    })
+})
 // cac ham xu ly
 function getNextVehicleCode() {
     fetch('/getNextVehicleCode')

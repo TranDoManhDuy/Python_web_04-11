@@ -16,6 +16,17 @@ messagevehicleStatus = document.getElementById("messagevehicleStatus")
 
 btnSubmit = document.getElementById("btnSubmit")
 
+addProductBtn = document.getElementById("addProductBtn")
+listProductBtn = document.getElementById("listProductBtn")
+
+addProductBtn.addEventListener('click', function() {
+    window.location.href = "/products_add"
+})
+listProductBtn.addEventListener('click', function() {
+    window.location.href = "/products_list"
+})
+console.log(addProductBtn, listProductBtn)
+
 let dataGlobal = {}
 isCanSubmit = true
 // dinh nghia cac ham
