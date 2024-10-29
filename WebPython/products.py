@@ -5,6 +5,7 @@ import pandas as pd
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill
 import locale
+import datetime
 # viết các class và function thuộc về product ở đây
 # Các class quản lý list chứa Các phương thức xử lý lọc dữ liệu, thêm sửa xóa dữ liệu.
 # viết các hàm xử lý và truy vấn, cập nhật dữ liệu SQL tại đây.
@@ -21,6 +22,7 @@ class phuongtien():
         self.__tinhtrangxe = ""
         self.__giathue1n = 0
         self.__danhmuc = ""
+        self.__ready = "SANSANG"
         
     def setId(self, id: str):
         if len(id) > 0:
@@ -68,8 +70,13 @@ class phuongtien():
     def getDanhmuc(self):
         return self.__danhmuc
     
+    def setReady(self, ready: str):
+        self.__ready = ready
+    def getReady(self):
+        return self.__ready
+    
     def __str__(self) -> str:
-        return self.__tenphuongtien + " " + self.__sodangki + " " + self.__loaiphuongtien + " " + str(self.__sochongoi) + " " + self.__tinhtrangxe + " " + str(self.__giathue1n) + " " + self.__danhmuc
+        return self.__tenphuongtien + " " + self.__sodangki + " " + self.__loaiphuongtien + " " + str(self.__sochongoi) + " " + self.__tinhtrangxe + " " + str(self.__giathue1n) + " " + self.__danhmuc + " " + self.__ready
     
     # trả về dictionary
     def to_dict(self):
@@ -81,7 +88,8 @@ class phuongtien():
             "tenphuongtien": self.__tenphuongtien,
             "sochongoi": self.__sochongoi,
             "giathue1n": self.__giathue1n,
-            "tinhtrangxe": self.__tinhtrangxe
+            "tinhtrangxe": self.__tinhtrangxe,
+            "ready": self.__ready
         }
 class danhsachphuongtien():
     def __init__(self) -> None:
@@ -106,7 +114,6 @@ class danhsachphuongtien():
             if tenphuongtien.lower() in pt.getTenphuongtien().lower():
                 dspt.append(pt.to_dict())
         dspt.sort(key=lambda x: x["id"])
-        print(dspt)
         return dspt
     def getlist(self):
         return [pt.to_dict() for pt in self.__danhsachphuongtien]
@@ -130,8 +137,8 @@ def fetchDataFromDB():
         pt.setSochongoi(i[5])
         pt.setGiathue1n(i[6])
         pt.setTinhtrangxe(i[7])
+        pt.setReady(i[8])
         danhsachPT.themphuongtien(pt)
-        
 # lay toan bo danh sach tu database
 @rootflaskapp.app.route("/products_getListPT", methods=["GET"])
 def products_getListPT():
@@ -139,13 +146,11 @@ def products_getListPT():
         fetchDataFromDB()
         danhsachPT.sortList()
         return rootflaskapp.jsonify(danhsachPT.getlist())
-    
 # Them phuong tien vao database
 @rootflaskapp.app.route("/addVehicle", methods=["POST"])
 def products_addPT():
     if rootflaskapp.request.method == "POST":
         data = rootflaskapp.request.get_json()
-        print(data)
         pt = phuongtien()
         pt.setId(str(int(data["vehicleCode"])))
         pt.setTenhuongtien(data["vehicleName"])
@@ -155,22 +160,20 @@ def products_addPT():
         pt.setTinhtrangxe(int(data["vehicleStatus"]))
         pt.setGiathue1n(float(data["vehiclePrice"]))
         pt.setDanhmuc(data["vehicleCategory"])
+        pt.setReady("SANSANG")
         danhsachPT.themphuongtien(pt)
-        print(pt.to_dict())
         query = (
-            f"INSERT INTO VEHICLE (ID, Category, Type, RegistrationPlate, VName, SeatNumber, Rent, Status) "
+            f"INSERT INTO VEHICLE (ID, Category, Type, RegistrationPlate, VName, SeatNumber, Rent, Status, Ready) "
             f"VALUES ('{pt.getId()}', '{pt.getDanhmuc()}', '{pt.getLoaiphuongtien()}', "
             f"'{pt.getSodangki()}', '{pt.getTenphuongtien()}', {pt.getSochongoi()}, "
-            f"{pt.getGiathua1n()}, {pt.getTinhtrangxe()})"
+            f"{pt.getGiathua1n()}, {pt.getTinhtrangxe()}, '{pt.getReady()}')"
         )
-
         datacenter.pushdata(query)
         return rootflaskapp.jsonify({"status": "success"})
     
 # chuyen trang
 @rootflaskapp.app.route("/chuyentrangDSPT", methods=["GET"])
 def chuyentrangDSPT():
-    print("chuyentrangDSPT---------------------------------------------------")
     return rootflaskapp.redirect("/products_list")
 
 # lay phuong tien theo SDK
@@ -211,7 +214,8 @@ def products_updatePT():
 @rootflaskapp.app.route("/getNextVehicleCode", methods=["GET"])
 def getNextVehicleCode():
     arr = list(map(lambda x: int(x["id"]), danhsachPT.getlist()))
-    print(arr)
+    if arr.__len__() == 0:
+        return rootflaskapp.jsonify({"id": "00001"})
     return rootflaskapp.jsonify({"id": str(max(arr) + 1).rjust(5, "0")})
 
 # kiem tra xem sdk moi, da ton tai trong danh sach sdk chua
@@ -243,7 +247,6 @@ phuongtienSC = phuongtien()
 def getIDForFix():
     if rootflaskapp.request.method == "POST":
         data = rootflaskapp.request.get_json()
-        print(data, "DATA_____________________________")
         pt = danhsachPT.layPttheoID(data["id"]).to_dict()
         global phuongtienSC
         phuongtienSC = pt
@@ -294,7 +297,6 @@ def products_edit():
 @rootflaskapp.app.route("/downloadFileExel", methods=['GET', 'POST'])
 def downloadFileFunc():
     locale.setlocale(locale.LC_ALL, 'vi_VN.UTF-8')
-    print(rootflaskapp.request.method, rootflaskapp.request.get_json())
     if not os.path.exists(rootflaskapp.app.config['UPLOAD_FOLDER']):
         os.makedirs(rootflaskapp.app.config['UPLOAD_FOLDER'])
         
@@ -305,16 +307,16 @@ def downloadFileFunc():
     
     ALL_VEHICLE = datacenter.takedata("SELECT * FROM VEHICLE")
     data = {
-        'ID': [str(i[0]).rjust(5, "0") for i in ALL_VEHICLE],
-        'Danh muc': [i[1] for i in ALL_VEHICLE],
-        'Loai xe': [i[2] for i in ALL_VEHICLE],
-        'So dang ky': [i[3] for i in ALL_VEHICLE],
-        'Ten xe': [i[4] for i in ALL_VEHICLE],
-        'So cho ngoi': [i[5] for i in ALL_VEHICLE],
-        'Gia thue 1 ngay': [locale.currency(int(i[6]), grouping=True) for i in ALL_VEHICLE],
-        'Tinh trang xe': [str(i[7]) + "%" for i in ALL_VEHICLE]
+        'ID': ["KET XUAT DU LIEU: " + str(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"))] + [str(i[0]).rjust(5, "0") for i in ALL_VEHICLE],
+        'Danh muc':[""] + [i[1] for i in ALL_VEHICLE],
+        'Loai xe': [""] +[i[2] for i in ALL_VEHICLE],
+        'So dang ky': [""] +[i[3] for i in ALL_VEHICLE],
+        'Ten xe':[""] + [i[4] for i in ALL_VEHICLE],
+        'So cho ngoi': [""] +[i[5] for i in ALL_VEHICLE],
+        'Gia thue 1 ngay': [""] +[locale.currency(int(i[6]), grouping=True) for i in ALL_VEHICLE],
+        'Tinh trang xe':[""] + [(str(i[7]) + "%") for i in ALL_VEHICLE],
+        'Ready': [""] + [i[8] for i in ALL_VEHICLE]
     }
-    
     df = pd.DataFrame(data)
     excel_file = os.path.join(rootflaskapp.app.config['UPLOAD_FOLDER'], 'dataProductslist.xlsx')
     df.to_excel(excel_file, index=False)
@@ -329,10 +331,7 @@ def downloadFileFunc():
     # Lưu file Excel với thay đổi
     wb.save(excel_file)
     try:
-        print(rootflaskapp.app.config['UPLOAD_FOLDER'])
         files = os.listdir(rootflaskapp.app.config['UPLOAD_FOLDER'])
-        print(files)
         return rootflaskapp.send_from_directory("static", "dataProductslist.xlsx", as_attachment=True)
     except Exception as e:
-        print(e)
         rootflaskapp.abort(404)

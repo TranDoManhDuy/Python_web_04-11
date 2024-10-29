@@ -19,7 +19,6 @@ themPT = document.querySelector('#themPT')
 
 // du lieu trang
 let listProduct = {}
-
 // Cac ham xu ly
 function getIDForFix(id) {
     id = Number(id)
@@ -52,8 +51,8 @@ function renderListProduct(listProduct) {
     if (listProduct.length == 0) {
         listContainer.innerHTML = `<tr><td colspan="9">Không có dữ liệu</td></tr>`
     }
+    console.log(listProduct)
     for (let i = 0; i < listProduct.length; i++) {
-        console.log(listProduct[i].id)
         productI = listProduct[i]
         listContainer.innerHTML += 
         `<tr>
@@ -65,6 +64,7 @@ function renderListProduct(listProduct) {
             <td>${productI.sochongoi}</td>
             <td>${productI.giathue1n} VNĐ</td>
             <td>${productI.tinhtrangxe}%</td>
+            <td>${productI.ready}</td>
             <td>
             <div style="cursor: pointer" class="btn btn-sm btn-primary" onclick=getIDForFix('${productI.id}')>Sửa</div>
             </td>
