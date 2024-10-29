@@ -28,13 +28,13 @@ def send_email(sender_email, sender_password, receiver_email, subject, body, bod
     except Exception as e:
         print(f"Da xay ra loi khi gui email: {e}")
 
-# def main():
-#     sender_email = "trandomanhduy2874@gmail.com"
-#     sender_password = "gamw xsyj frri gsyf"
-#     receiver_email = "n22dccn114@student.ptithcm.edu.vn"
-#     subject = "Tieu de email"
-#     body = "Noi dung email"
-#     send_email(sender_email, sender_password, receiver_email, subject, body, 'plain')
-
-# if __name__ == "__main__":
-#     main()
+def main():
+    sender_email = "trandomanhduy2874@gmail.com"
+    sender_password = "gamw xsyj frri gsyf"
+    receiver_email = "n22dccn114@student.ptithcm.edu.vn"
+    subject = "Tieu de email"
+    with open("email.html", encoding="utf-8") as file:
+        body = file.read()
+    send_email(sender_email, sender_password, receiver_email, subject, body, 'html')
+if __name__ == "__main__":
+    main()

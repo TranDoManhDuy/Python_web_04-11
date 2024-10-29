@@ -78,8 +78,8 @@
           data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Thao tác</h6>
-              <a class="collapse-item" href="../products/list-product.html">Danh sách</a>
-              <a class="collapse-item" href="../products/add-product.html">Thêm</a>
+              <div class="collapse-item" id="listProductBtn" style="cursor: pointer;">Danh sách</div>
+              <div class="collapse-item" id="addProductBtn" style="cursor: pointer;">Thêm</div>
           </div>
       </div>
   </li>
@@ -165,12 +165,12 @@
                   <form action="update_vehicle.php" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                       <label for="vehicleCode">Mã số xe</label>
-                      <input type="text" class="form-control" id="vehicleCode" name="vehicleCode" value="#01DXO" required>
+                      <input type="text" class="form-control" id="vehicleCode" name="vehicleCode" required disabled>
                     </div>
                     <div class="form-group">
                       <label for="vehicleCategory">Danh mục</label>
                       <select id="vehicleCategory" name="vehicleCategory" class="form-control" required>
-                        <option value="Rolls Royce">VinFast</option>
+                        <option value="VinFast">VinFast</option>
                         <option value="Mercedes">Mercedes</option>
                         <option value="BMW">BMW</option>
                         <option value="Toyota">Toyota</option>
@@ -187,7 +187,7 @@
                       <label for="vehicleType">Loại xe</label>
                       <select id="vehicleType" name="vehicleType" class="form-control" required>
                         <option value="Sedan">Sedan</option>
-                        <option value="SUV">Suv</option>
+                        <option value="SUV">SUV</option>
                         <option value="Hatchback">Hatchback</option>
                         <option value="Coupe">Coupe</option>
                         <option value="Minivan">Minivan</option>
@@ -200,27 +200,31 @@
                     </div>
                     <div class="form-group">
                       <label for="registrationNumber">Số đăng ký</label>
-                      <input type="text" class="form-control" id="registrationNumber" name="registrationNumber" value="78154" required>
+                      <div id="messageRegistrationNumber" style="color: red; font-style: italic; font-size: 10px"></div>
+                      <input type="text" class="form-control" id="registrationNumber" name="registrationNumber" required>
                     </div>
                     <div class="form-group">
                       <label for="vehicleName">Tên xe</label>
-                      <input type="text" class="form-control" id="vehicleName" name="vehicleName" value="Mercedes" required>
+                      <div id="messagevVhicleName" style="color: red; font-style: italic; font-size: 10px"></div>
+                      <input type="text" class="form-control" id="vehicleName" name="vehicleName" required>
                     </div>
                     <div class="form-group">
                       <label for="vehicleSeats">Số chỗ ngồi</label>
-                      <input type="number" class="form-control" id="vehicleSeats" name="vehicleSeats" value="6" required>
+                      <div id="messageVehicleSeats" style="color: red; font-style: italic; font-size: 10px"></div>
+                      <input type="number" class="form-control" id="vehicleSeats" name="vehicleSeats" required>
                     </div>
                     <div class="form-group">
                       <label for="vehiclePrice">Giá thuê trong 1h</label>
-                      <input type="text" class="form-control" id="vehiclePrice" name="vehiclePrice" value="200,000 VNĐ" required>
+                      <div id="messageVehiclePrice" style="color: red; font-style: italic; font-size: 10px"></div>
+                      <input type="number" class="form-control" id="vehiclePrice" name="vehiclePrice" required>
                     </div>
                     <div class="form-group">
-                      <label for="vehicleStatus">Tình trạng xe</label>
-                      <input type="text" placeholder="%" class="form-control">
+                      <label for="vehicleStatus">Tình trạng xe (%)</label>
+                      <div id="messagevehicleStatus" style="color: red; font-style: italic; font-size: 10px"></div>
+                      <input type="number" placeholder="%" class="form-control" id="vehicleStatus">
                     </div>
-                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    <button type="button" id="btnSubmit" class="btn btn-primary">Cập nhật</button>
                   </form>
-                  
                 </div>
               </div>
             </div>
@@ -266,7 +270,8 @@
   <script src="{{url_for('static', filename='/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
   <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
-  
+  <script src="{{url_for('static', filename='/handle/products/edit-product.js')}}"></script>
+
 </body>
 
 </html>

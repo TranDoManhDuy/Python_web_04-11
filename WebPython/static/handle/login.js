@@ -24,7 +24,20 @@ btnSubmit.addEventListener('click', function() {
             return response.json()
         }
     })
-    .then(data => console.log(data))
+    .then(function (data) {
+        if (data != undefined) {
+            console.log(data)
+        }
+    })
 })
 
-console.log(inputEmail, inputPassword, btnSubmit)
+inputEmail.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        inputPassword.focus()
+    }
+})
+inputPassword.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        btnSubmit.click()
+    }
+})
