@@ -2,6 +2,7 @@ import rootflaskapp
 import products
 import users
 import customer
+import email_automatic
 
 @rootflaskapp.app.route('/orders_list')
 def orders_list():

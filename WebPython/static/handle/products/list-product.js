@@ -13,13 +13,12 @@
 </tr> */}
 listContainer = document.querySelector('#LIST_PRODUCT_CONTAINER')
 inputVNameSearch = document.querySelector('#inputVNameSearch')
-buttonSearch = document.querySelector('#buttonSearch')
+buttonKXFile = document.querySelector('#buttonKXFile')
 chuyentrangDSPT = document.querySelector('#chuyentrangDSPT')
 themPT = document.querySelector('#themPT')
 
 // du lieu trang
 let listProduct = {}
-
 // Cac ham xu ly
 function getIDForFix(id) {
     id = Number(id)
@@ -52,8 +51,8 @@ function renderListProduct(listProduct) {
     if (listProduct.length == 0) {
         listContainer.innerHTML = `<tr><td colspan="9">Không có dữ liệu</td></tr>`
     }
+    console.log(listProduct)
     for (let i = 0; i < listProduct.length; i++) {
-        console.log(listProduct[i].id)
         productI = listProduct[i]
         listContainer.innerHTML += 
         `<tr>
@@ -65,6 +64,7 @@ function renderListProduct(listProduct) {
             <td>${productI.sochongoi}</td>
             <td>${productI.giathue1n} VNĐ</td>
             <td>${productI.tinhtrangxe}%</td>
+            <td>${productI.ready}</td>
             <td>
             <div style="cursor: pointer" class="btn btn-sm btn-primary" onclick=getIDForFix('${productI.id}')>Sửa</div>
             </td>
@@ -110,6 +110,36 @@ themPT.addEventListener('click', function() {
             window.location.href = response.url
         }
     })
+})
+
+buttonKXFile.addEventListener('click', function() {
+    fetch("/downloadFileExel", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            filename: "productslist.xlsx"
+        })
+    })
+        .then(response => {
+            console.log(response);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'dataProductslist.xlsx'); // Đặt tên file chính xác
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => console.error('There was a problem with the fetch operation:', error));
 })
 // Cac ham thuc thi khi reload trang
 fetchListProduct()
