@@ -1,5 +1,10 @@
 import rootflaskapp
-import datacenter 
+import datacenter
+import os
+import pandas as pd
+from openpyxl import load_workbook
+from openpyxl.styles import PatternFill
+import locale
 # viết các class và function thuộc về product ở đây
 # Các class quản lý list chứa Các phương thức xử lý lọc dữ liệu, thêm sửa xóa dữ liệu.
 # viết các hàm xử lý và truy vấn, cập nhật dữ liệu SQL tại đây.
@@ -285,3 +290,49 @@ def products_add():
 @rootflaskapp.app.route("/products_edit")
 def products_edit():
     return rootflaskapp.render_template("views/products/edit-product.html")
+
+@rootflaskapp.app.route("/downloadFileExel", methods=['GET', 'POST'])
+def downloadFileFunc():
+    locale.setlocale(locale.LC_ALL, 'vi_VN.UTF-8')
+    print(rootflaskapp.request.method, rootflaskapp.request.get_json())
+    if not os.path.exists(rootflaskapp.app.config['UPLOAD_FOLDER']):
+        os.makedirs(rootflaskapp.app.config['UPLOAD_FOLDER'])
+        
+    file_path = os.path.join(rootflaskapp.app.config['UPLOAD_FOLDER'], 'dataProductslist.xlsx')
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    # Tao data, danh sach cac phuong tien
+    
+    ALL_VEHICLE = datacenter.takedata("SELECT * FROM VEHICLE")
+    data = {
+        'ID': [str(i[0]).rjust(5, "0") for i in ALL_VEHICLE],
+        'Danh muc': [i[1] for i in ALL_VEHICLE],
+        'Loai xe': [i[2] for i in ALL_VEHICLE],
+        'So dang ky': [i[3] for i in ALL_VEHICLE],
+        'Ten xe': [i[4] for i in ALL_VEHICLE],
+        'So cho ngoi': [i[5] for i in ALL_VEHICLE],
+        'Gia thue 1 ngay': [locale.currency(int(i[6]), grouping=True) for i in ALL_VEHICLE],
+        'Tinh trang xe': [str(i[7]) + "%" for i in ALL_VEHICLE]
+    }
+    
+    df = pd.DataFrame(data)
+    excel_file = os.path.join(rootflaskapp.app.config['UPLOAD_FOLDER'], 'dataProductslist.xlsx')
+    df.to_excel(excel_file, index=False)
+    
+    wb = load_workbook(excel_file)
+    ws = wb.active
+    header_fill = PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
+    
+    for cell in ws[1]:  # Duyệt qua hàng đầu tiên (tên cột)
+        cell.fill = header_fill
+
+    # Lưu file Excel với thay đổi
+    wb.save(excel_file)
+    try:
+        print(rootflaskapp.app.config['UPLOAD_FOLDER'])
+        files = os.listdir(rootflaskapp.app.config['UPLOAD_FOLDER'])
+        print(files)
+        return rootflaskapp.send_from_directory("static", "dataProductslist.xlsx", as_attachment=True)
+    except Exception as e:
+        print(e)
+        rootflaskapp.abort(404)
