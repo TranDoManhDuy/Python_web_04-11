@@ -31,7 +31,8 @@ import sqlite3
 #         VName TEXT NOT NULL CHECK (LENGTH(VName) > 0),
 #         SeatNumber INTEGER NOT NULL CHECK (SeatNumber > 0),
 #         Rent REAL NOT NULL CHECK (Rent > 0),
-#         Status INTEGER NOT NULL
+#         Status INTEGER NOT NULL,
+#         Ready TEXT CHECK (Ready IN ('SANSANG', 'DACHOTHUE'))
 #     )
 # """)
 # c.execute("""
