@@ -213,7 +213,7 @@ cccd.addEventListener('keyup', function (event) {
 });
 buttonAddCustomer.addEventListener('click', function () {
     if (canSubmit && customerPhone.value != '' && driverLicenseId.value != '' && customerEmail.value != '' && lastName.value != '' && firstName.value != '' && cccd.value != '') {
-        fetch('/addCustomer', {
+        fetch('/themCustomer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -237,8 +237,8 @@ buttonAddCustomer.addEventListener('click', function () {
                 lastName.value = '';
                 firstName.value = '';
                 cccd.value = '';
-                location.reload();
-                
+                // location.reload();
+                window.location.href = '/customer_list';
             } else {
                 alert('Add customer fail');
             }

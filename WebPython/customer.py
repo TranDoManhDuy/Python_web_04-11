@@ -1,10 +1,6 @@
 import rootflaskapp
 import re
 import datacenter
-# them, sua, khởi tạo lấy duư liệu từ sql (xong)
-# regex (xong)
-# ho tro tim kiem
-# lấy dữ liệu từ sql (tạm ổn)
 # /////////////////////khach hang////////////////////////////////////
 
 
@@ -51,17 +47,15 @@ class Customer:  # khach hang so it
 
     def setCustomer(self, customer):
         # customer = Customer(customer)
-        self.__SSN = customer.getSSN() if customer.getSSN() != None and len(
+        self.__SSN = customer.getSSN() if len(
             customer.getSSN()) == 12 else self.__SSN
-        self.__name.Fname = customer.getName().Fname if customer.getName(
-        ).Fname != None else self.__name.Fname
-        self.__name.Lname = customer.getName().Lname if customer.getName(
-        ).Lname != None else self.__name.Lname
-        self.__Idlicense = customer.getIdlicense(
-        ) if customer.getIdlicense() != None and len(customer.getIdlicense) == 12 else self.__Idlicense
+        self.__name.Fname = customer.getName().Fname
+        self.__name.Lname = customer.getName().Lname
+        self.__Idlicense = customer.getIdlicense() if len(
+            customer.getIdlicense()) == 12 else self.__Idlicense
         self.__email = customer.getEmail() if customer.getEmail() != None else self.__email
-        self.__phone = customer.getPhone() if customer.getPhone(
-        ) != None and len(customer.getPhone()) == 10 else self.__phone
+        self.__phone = customer.getPhone() if len(
+            customer.getPhone()) == 10 else self.__phone
 
     def getId(self):
         return self.__Id
@@ -113,8 +107,11 @@ class Customers:  # khach hang so nhieu
             self.oldestId += 1
             customer.setId(str(self.oldestId).zfill(9))
             self.__customers.append(customer)
-            datacenter.pushdata(f"INSERT INTO CUSTOMER VALUES ('{customer.getId()}', '{customer.getSSN()}', '{
-                                customer.getName().Lname}', '{customer.getName().Fname}', '{customer.getIdlicense()}', '{customer.getEmail()}', '{customer.getPhone()}')")
+            try:
+                datacenter.pushdata(f"INSERT INTO CUSTOMER VALUES ('{customer.getId()}', '{customer.getSSN()}', '{
+                    customer.getName().Lname}', '{customer.getName().Fname}', '{customer.getIdlicense()}', '{customer.getEmail()}', '{customer.getPhone()}')")
+            except:
+                print("Error")
             return True
         return False
 
@@ -151,20 +148,26 @@ class Customers:  # khach hang so nhieu
 
         return [i.__dir__() for i in self.__customers if checkOpen(i.getName().__str__(), name)]
 
-    def updateClient(self, Id, customer):  # sửa thông tin khách hàng
+    def updateCustomer(self, Id, customer):  # sửa thông tin khách hàng
         if not isinstance(customer, Customer):
             print("customer is not instance of Customers")
-        elif [] != list(filter(lambda x: x.getIdlicense() == customer.getIdlicense(), self.__customers)):
+        # kiểm tra xem có trùng Idlicense không
+        elif [] != list(filter(lambda x: x.getIdlicense() == customer.getIdlicense(), self.__customers)) and self.getCustomersOfId(Id).getIdlicense() != customer.getIdlicense():
             print("Idlicense is exist")
-        elif [] != list(filter(lambda x: x.getSSN() == customer.getSSN(), self.__customers)):
+        # kiểm tra xem có trùng SSN không
+        elif [] != list(filter(lambda x: x.getSSN() == customer.getSSN(), self.__customers)) and self.getCustomersOfId(Id).getSSN() != customer.getSSN():
             print("SSN is exist")
         else:
             customer_need_update = self.getCustomersOfId(Id)
             customer_need_update.setCustomer(customer)
-            print(f"UPDATE CUSTOMER SET SSN = {customer_need_update.getSSN()}, LastName = {customer_need_update.getName().Lname}, FistName = {customer_need_update.getName(
-            ).Fname}, License = {customer_need_update.getIdlicense()}, Email = {customer_need_update.getEmail()}, PhoneNumber = {customer_need_update.getPhone()} WHERE Id = {Id}")
-            datacenter.pushdata(f"UPDATE CUSTOMER SET SSN = '{customer_need_update.getSSN()}', LastName = '{customer_need_update.getName().Lname}', FirstName = '{customer_need_update.getName(
-            ).Fname}', License = '{customer_need_update.getIdlicense()}', Email = '{customer_need_update.getEmail()}', PhoneNumber = '{customer_need_update.getPhone()}' WHERE Id = '{Id}'")
+            ssn = customer_need_update.getSSN()
+            lastname = customer_need_update.getName().Lname
+            firstname = customer_need_update.getName().Fname
+            idlicense = customer_need_update.getIdlicense()
+            email = customer_need_update.getEmail()
+            phone = customer_need_update.getPhone()
+            datacenter.pushdata(f"UPDATE CUSTOMER SET SSN = '{ssn}', LastName = '{lastname}', FirstName = '{firstname}', License = '{idlicense}', Email = '{email}', PhoneNumber = '{phone}' WHERE ID = '{Id}'")
+            print("testing")
             return True
         return False
 
@@ -256,8 +259,8 @@ def customer_list():
 # customer_add
 
 
-@rootflaskapp.app.route('/addCustomer', methods=["POST"])
-def addCustomer():
+@rootflaskapp.app.route('/themCustomer', methods=["POST"])
+def addCustomers():
     if rootflaskapp.request.method == 'POST':
         data = rootflaskapp.request.get_json()
         customer = Customer(data["cccd"], data["lastName"], data["firstName"],
@@ -317,6 +320,32 @@ def chuyentrangDSKH():
 @rootflaskapp.app.route('/customer_add')
 def customer_add():
     return rootflaskapp.render_template('views/customer/add-customer.html')
+
+# customer_edit
+
+
+@rootflaskapp.app.route('/updateCustomer', methods=["POST"])
+def updateCustomer():
+    if rootflaskapp.request.method == 'POST':
+        data = rootflaskapp.request.get_json()
+        customer = Customer(data["CCCD"], data["Lname"], data["Fname"],
+                            data["idlicense"], data["email"], data["phone"])
+      
+        # execute = """
+        #     UPDATE CUSTOMER
+        #     SET SSN = '{}', LastName = '{}', FirstName = '{}', License = '{}', Email = '{}', PhoneNumber = '{}'
+        #     WHERE ID = '{}'
+        # """
+        # datacenter.pushdata(execute.format(
+        #     customer.getSSN(), customer.getName().Lname, customer.getName().Fname, customer.getIdlicense(), customer.getEmail(), customer.getPhone(), data["id"]))
+        if   flaskCustomers.updateCustomer(data["id"], customer) == True:
+            return rootflaskapp.jsonify({"status": "success"})
+        return rootflaskapp.jsonify({"status": "fail"})
+
+
+@rootflaskapp.app.route('/getCustomerFix')
+def getCustomer():
+    return rootflaskapp.jsonify(fixCustomer)
 
 
 @rootflaskapp.app.route('/customer_edit')

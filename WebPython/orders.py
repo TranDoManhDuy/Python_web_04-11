@@ -3,7 +3,7 @@ import datetime
 import datacenter
 import customer as cus  # import customer
 import enum
-
+import products as pro  # import product
 # them, sua, khởi tạo lấy duư liệu từ sql
 # lấy dữ liệu từ sql
 #
