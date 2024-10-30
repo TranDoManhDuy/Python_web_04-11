@@ -166,7 +166,8 @@ class Customers:  # khach hang so nhieu
             idlicense = customer_need_update.getIdlicense()
             email = customer_need_update.getEmail()
             phone = customer_need_update.getPhone()
-            datacenter.pushdata(f"UPDATE CUSTOMER SET SSN = '{ssn}', LastName = '{lastname}', FirstName = '{firstname}', License = '{idlicense}', Email = '{email}', PhoneNumber = '{phone}' WHERE ID = '{Id}'")
+            datacenter.pushdata(f"UPDATE CUSTOMER SET SSN = '{ssn}', LastName = '{lastname}', FirstName = '{
+                                firstname}', License = '{idlicense}', Email = '{email}', PhoneNumber = '{phone}' WHERE ID = '{Id}'")
             print("testing")
             return True
         return False
@@ -183,6 +184,7 @@ def validate_email(email):
 def checkOpen(stin, codein):
     if codein == "":
         return True
+
     st = stin.lower()
     code = codein.lower()
     for i in range(len(st)):
@@ -330,7 +332,7 @@ def updateCustomer():
         data = rootflaskapp.request.get_json()
         customer = Customer(data["CCCD"], data["Lname"], data["Fname"],
                             data["idlicense"], data["email"], data["phone"])
-      
+
         # execute = """
         #     UPDATE CUSTOMER
         #     SET SSN = '{}', LastName = '{}', FirstName = '{}', License = '{}', Email = '{}', PhoneNumber = '{}'
@@ -338,7 +340,7 @@ def updateCustomer():
         # """
         # datacenter.pushdata(execute.format(
         #     customer.getSSN(), customer.getName().Lname, customer.getName().Fname, customer.getIdlicense(), customer.getEmail(), customer.getPhone(), data["id"]))
-        if   flaskCustomers.updateCustomer(data["id"], customer) == True:
+        if flaskCustomers.updateCustomer(data["id"], customer) == True:
             return rootflaskapp.jsonify({"status": "success"})
         return rootflaskapp.jsonify({"status": "fail"})
 

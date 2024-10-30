@@ -74,7 +74,7 @@ inputPhone.addEventListener('keyup', function (event) {
                 messageCustomerPhone.innerHTML = 'Phone number will be changed';
                 isCanSubmit = true;
             }
-        }else{
+        } else {
             messageCustomerPhone.innerHTML = '';
             isCanSubmit = true;
         }
@@ -130,7 +130,7 @@ inputEmail.addEventListener('keyup', function (event) {
                     isCanSubmit = true;
                 }
             })
-    }else{
+    } else {
         messageCustomerEmail.innerHTML = '';
         isCanSubmit = true;
     }
@@ -185,8 +185,42 @@ inputFirstName.addEventListener('keyup', function (event) {
         isCanSubmit = true;
     }
 });
+inputCCCD.addEventListener('keyup', function (event) {
+    if (!/^\d+$/.test(cccd.value)) {
+        messageCCCD.innerHTML = 'CCCD number must be a number';
+        isCanSubmit = false;
+    } else
+        if (cccd.value != dataGlobal.SSN) {
+            if (cccd.value.length != 12) {
+                messageCCCD.innerHTML = 'CCCD must be 12 characters';
+                isCanSubmit = false;
+            } else {
+                fetch('/checkCCCD', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ CCCD: inputCCCD.value })
+                }).then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    if (data.status == "fail") {
+                        messageCCCD.innerHTML = 'CCCD has exist';
+                        isCanSubmit = false;
+                    } else {
+                        messageCCCD.innerHTML = '';
+                        isCanSubmit = true;
+                    }
+                });
+            }
+        } else {
+            messageCCCD.innerHTML = '';
+            isCanSubmit = true;
+        }
+});
+
 buttonSubmit.addEventListener('click', function () {
-    if(isCanSubmit&&inputPhone.value!=''&&inputIDLicense.value!=''&&inputEmail.value!=''&&inputLastName.value!=''&&inputFirstName.value!=''&&inputCCCD.value!=''){
+    if (isCanSubmit && inputPhone.value != '' && inputIDLicense.value != '' && inputEmail.value != '' && inputLastName.value != '' && inputFirstName.value != '' && inputCCCD.value != '') {
         fetch('/updateCustomer', {
             method: 'POST',
             headers: {
@@ -209,10 +243,10 @@ buttonSubmit.addEventListener('click', function () {
                     location.reload();
                     window.location.href = '/customer_list';
                 } else {
-                    alert('Update customer fail');                    
+                    alert('Update customer fail');
                 }
             });
-    }        
+    }
 });
 
 function renderUIData(data) {

@@ -10,6 +10,11 @@ import products as pro  # import product
 # ///////////////////////////////////////////////////////////
 
 
+def transformTime(time):
+    time = datetime.datetime.strptime(time, '%Y/%m/%d').date()
+    return time.strftime('%d/%m/%Y')
+
+
 class Time:
     def __init__(self, time):
         try:
@@ -35,56 +40,59 @@ class Time:
     def __str__(self):
         if self.date == None:
             return "Ngày không hợp lệ"
-        return f"{self.date.year}/{self.date.month}/{self.date.day}"
+        return f"{self.date.year}/{str(self.date.month).zfill(2)}/{str(self.date.day).zfill(2)}"
 
 
 class Status(enum.Enum):
     chua_thanh_toan = 0
     da_thanh_toan = 1
 
+    def __str__(self):
+        return self.name.replace("_", " ").upper()
+
 
 # /////////////////////hóa đơn////////////////////////////////////
 
 
 class Order:  # hóa đơn số ít
-    def __init__(self, id_Staff, SSN_Customer, id_Products, date_of_booking, date_of_end, status):
+    def __init__(self, id_Staff, Id_Customer, id_Products, date_of_booking, date_of_end, status):
         self.__Id = None  # sẽ sinh tự động "000000000 - 999999999"
         self.__id_Staff = str(id_Staff)  # foreign key
-        self.__SSN_Customer = str(SSN_Customer)  # foreign key
+        self.__Id_Customer = str(Id_Customer)  # foreign key
         self.__id_Products = str(id_Products)   # foreign key
         # lúc nạp vào là 1 string yyyy/mm/dd
         self.__date_of_booking = Time(date_of_booking)
         self.__date_of_end = Time(date_of_end)  # ngày trả lớn hơn ngày mượn
-        if self.__date_of_booking.compareTime(self.__date_of_end) == True:
-            self.__date_of_end = None
+        # if self.__date_of_booking.compareTime(self.__date_of_end) == True:
+        #     self.__date_of_end.date = None
         self.__unit_price = None
         self.__status = Status(status)  # có thể lỗi
 
     def setOrder(self, order):
-        order = Order(order)
+        # order = Order(order)
         self.__id_Staff = order.getIdStaff() if order.getIdStaff() != None else self.__id_Staff
         # check xem co ton tai khach hang ko
-        self.__SSN_Customer = order.getSSNCustomer() if order.getSSNCustomer(
-        ) != None and cus.flaskCustomers.getClientOfSSN(order.getSSNCustomer()) != None else self.__SSN_Customer
-        self.__id_Products = order.getIdProducts(
-        ) if order.getIdProducts() != None else self.__id_Products
+        self.__Id_Customer = order.getIdCustomer() if cus.flaskCustomers.getCustomersOfId(
+            order.getIdCustomer()) != None else self.__Id_Customer
+        self.__id_Products = order.getIdProducts() if pro.danhsachPT.layPttheoID(
+            order.getIdProducts) != None else self.__id_Products
         self.__date_of_booking = order.getDateOfBooking(
         ) if order.getDateOfBooking() != None else self.__date_of_booking
         self.__date_of_end = order.getDateOfEnd(
         ) if order.getDateOfEnd() != None else self.__date_of_end
         self.__status = order.getStatus() if order.getStatus() != None else self.__status
 
-    def getId(self):
+    def getIdOrder(self):
         return self.__Id
 
     def setIdOrder(self, id_order):
-        self.__id_Order = id_order
+        self.__Id = id_order
 
     def getIdStaff(self):
         return self.__id_Staff
 
-    def getSSNCustomer(self):
-        return self.__SSN_Customer
+    def getIdCustomer(self):
+        return self.__Id_Customer
 
     def getIdProducts(self):
         return self.__id_Products
@@ -102,7 +110,16 @@ class Order:  # hóa đơn số ít
         return self.__status
 
     def __str__(self):
-        return f"Id: {self.__id_Order}, IdStaff: {self.__id_Staff}, IdCustomer: {self.__id_Customer}, IdProducts: {self.__id_Products}, DateOfBooking: {self.__date_of_booking}, DateOfEnd: {self.__date_of_end}, Status: {self.__status}"
+        return f"Id: {self.__Id}, IdStaff: {self.__id_Staff}, IdCustomer: {self.__Id_Customer}, IdProducts: {self.__id_Products}, DateOfBooking: {self.__date_of_booking}, DateOfEnd: {self.__date_of_end}, Status: {self.__status}"
+
+    def __dir__(self):
+        return {"Id": self.__Id,
+                "IdStaff": self.__id_Staff,
+                "IdCustomer": cus.flaskCustomers.getCustomersOfId(self.__Id_Customer).getSSN(),
+                "IdProducts": pro.danhsachPT.layPttheoID(self.__id_Products).getSodangki(),
+                "DateOfBooking": self.__date_of_booking.__str__().replace("/", "-"),
+                "DateOfEnd": self.__date_of_end.__str__().replace("/", "-"),
+                "Status": self.__status.__str__()}
 
 
 class Orders:  # hóa đơn số nhiều
@@ -115,13 +132,20 @@ class Orders:  # hóa đơn số nhiều
             da = Order(i[1], i[2], i[3], i[4], i[5], i[6])
             da.setIdOrder(i[0])
             self.__list_order.append(da)
+            self.oldest_id += 1
+
+    def getListOrderByidOpen(self, id):
+        return list(filter(lambda x: cus.checkOpen(x.getIdOrder(), id), self.__list_order))
 
     def getListOrder(self):
         return self.__list_order
 
+    def gitListOrderJson(self):
+        return list(map(lambda x: x.__dir__(), self.__list_order))
+
     def getOrderOfId(self, id_order):
-        a = list(filter(lambda x: x.getIdOrder() ==
-                 id_order, self.__list_order))
+        a = list(filter(lambda x: x.getIdOrder()
+                 == id_order, self.__list_order))
         if a == []:
             return None
         return a[0]
@@ -129,27 +153,37 @@ class Orders:  # hóa đơn số nhiều
     def addOrder(self, order):
         if not isinstance(order, Order):
             print("order is not instance of order")
-        elif cus.flaskCustomers.getClientOfSSN(order.getSSNCustomer()) == None:
+        elif cus.flaskCustomers.getCustomersOfId(order.getIdCustomer()) == None:
             # check id_customer ton tai hay ko
             print("Customer is not exist")
             # chua check id_products, id_staff ton tai hay ko
+        elif pro.danhsachPT.layPttheoID(order.getIdProducts()) == None and order.getIdProducts() != None:
+            print("Product is not exist")
+        elif order.getDateOfBooking().compareTime(order.getDateOfEnd()) == True:
+            print("Date of booking is greater than date of end")
         else:
             self.oldest_id += 1
-            order.setIdOrder(self.oldest_id)
+            order.setIdOrder(str(self.oldest_id).zfill(9))
             self.__list_order.append(order)
-            datacenter.pushdata(f"INSERT INTO ORDERS VALUES ('{order.getId()}', '{order.getIdStaff()}', '{order.getSSNCustomer()}', '{
-                                order.getIdProducts()}', '{order.getDateOfBooking()}', '{order.getDateOfEnd()}', '{order.getStatus()}')")
+            datacenter.pushdata(f"INSERT INTO ORDERS VALUES ('{order.getIdOrder()}', '{order.getIdStaff()}', '{order.getIdCustomer()}', '{
+                                int(order.getIdProducts())}', '{order.getDateOfBooking()}', '{order.getDateOfEnd()}', '{order.getStatus().value}')")
             return True
         return False
 
     def updateOrder(self, id, order):
         if not isinstance(order, Order):
             print("order is not instance of order")
-        elif cus.flaskCustomers.getClientOfSSN(order.getSSNCustomer()) == None and order.getSSNCustomer() != None:
+        elif cus.flaskCustomers.getCustomersOfId(order.getIdCustomer()) == None:
             print("Customer is not exist")  # check id_customer ton tai hay ko
-            # chua check id_products, id_staff ton tai hay ko
+        elif pro.danhsachPT.layPttheoID(order.getIdProducts()) == None and order.getIdProducts() != None:
+            print("Product is not exist")  # check id_products ton tai hay ko
+        elif order.getDateOfBooking().compareTime(order.getDateOfEnd()) == True:
+            print("Date of booking is greater than date of end")
         else:
             self.getOrderOfId(id).setOrder(order)
+            datacenter.pushdata(f"UPDATE ORDERS SET IDStaff = '{order.getIdStaff()}', IDCustomer = '{order.getIdCustomer()}', IDVehicle = '{int(order.getIdProducts(
+            ))}', DateRentStart = '{order.getDateOfBooking()}', DateRentEnd = '{order.getDateOfEnd()}', Status = '{order.getStatus().value}' WHERE ID = '{id}'")
+
             return True
         return False
 
@@ -158,19 +192,99 @@ class Orders:  # hóa đơn số nhiều
 
 
 # /////////////////////test////////////////////////////////////
-if __name__ == '__main__':
-    print("testing")
+flaskOrders = Orders()
+if __name__ == "__main__":
+    pass
+
+# orders_list
 
 
-# ////////////////////////////////////////////////////////////
 @rootflaskapp.app.route('/orders_list')
 def orders_list():
     return rootflaskapp.render_template('views/orders/list-order.html')
 
 
+@rootflaskapp.app.route('/Orders_getListHD', methods=['GET'])
+def orders_getListHD():
+    return rootflaskapp.jsonify(flaskOrders.gitListOrderJson())
+
+
+@rootflaskapp.app.route('/Orders_searchHD', methods=['POST'])
+def orders_searchHD():
+    if rootflaskapp.request.method == 'POST':
+        data = rootflaskapp.request.get_json()
+        datapush = flaskOrders.getListOrderByidOpen(data['key'])
+        datapush = list(map(lambda x: x.__dir__(), datapush))
+        return rootflaskapp.jsonify(datapush)
+
+
+@rootflaskapp.app.route('/getIDOrderForFix', methods=['POST'])
+def getIDOrderForFix():
+    if rootflaskapp.request.method == 'POST':
+        data = rootflaskapp.request.get_json()
+        cu = flaskOrders.getOrderOfId(data['id']).__dir__()
+        global OrderForFix
+        OrderForFix = cu
+        return rootflaskapp.jsonify({"status": "success", "order": cu})
+
+
+@rootflaskapp.app.route('/chuyentrang_fixOrder', methods=['GET'])
+def chuyentrang_fixOrder():
+    return rootflaskapp.redirect(rootflaskapp.url_for('orders_edit'))
+
+# orders_add
+
+
+@rootflaskapp.app.route('/addOrder', methods=['POST'])
+def addOrder():
+    if rootflaskapp.request.method == 'POST':
+        data = rootflaskapp.request.get_json()
+        if data['Status'] == "Đã thanh toán":
+            status = Status.da_thanh_toan
+        elif data['Status'] == "Chưa thanh toán":
+            status = Status.chua_thanh_toan
+        od = Order(data['IdStaff'], cus.flaskCustomers.getClientOfSSN(data['IdCustomer']).getId(
+        ), pro.danhsachPT.layPttheoSDK(data['IdProducts'])["id"], str(data['DateOfBooking']).replace('-', '/'), str(data['DateOfEnd']).replace('-', '/'), status.value)
+        if flaskOrders.addOrder(od):
+            return rootflaskapp.jsonify({"status": "success"})
+        if od.getDateOfBooking().compareTime(od.getDateOfEnd()) == True:
+            return rootflaskapp.jsonify({"status": "fail1", "error": "Date of booking is greater than date of end"})
+        return rootflaskapp.jsonify({"status": "fail"})
+
+
+@rootflaskapp.app.route('/getNewIdorder')
+def getNewIdorder():
+    return rootflaskapp.jsonify({"id": str(flaskOrders.oldest_id+1).zfill(9)})
+
+
 @rootflaskapp.app.route('/orders_add')
 def orders_add():
     return rootflaskapp.render_template('views/orders/add-order.html')
+# orders_edit
+
+
+@rootflaskapp.app.route('/editOrder', methods=['POST'])
+def editOrder():
+    if rootflaskapp.request.method == 'POST':
+        data = rootflaskapp.request.get_json()
+        if data['Status'] == "Đã thanh toán":
+            status = Status.da_thanh_toan
+        elif data['Status'] == "Chưa thanh toán":
+            status = Status.chua_thanh_toan
+        else:
+            status = flaskOrders.getOrderOfId(data['Id']).getStatus()
+        od = Order(data['IdStaff'], cus.flaskCustomers.getClientOfSSN(data['IdCustomer']).getId(
+        ), pro.danhsachPT.layPttheoSDK(data['IdProducts'])["id"], str(data['DateOfBooking']).replace('-', '/'), str(data['DateOfEnd']).replace('-', '/'), status.value)
+        if flaskOrders.updateOrder(data['Id'], od):
+            return rootflaskapp.jsonify({"status": "success"})
+        if od.getDateOfBooking().compareTime(od.getDateOfEnd()) == True:
+            return rootflaskapp.jsonify({"status": "fail1", "error": "Date of booking is greater than date of end"})
+        return rootflaskapp.jsonify({"status": "fail"})
+
+
+@rootflaskapp.app.route('/getOrderFix')
+def getOrderFix():
+    return rootflaskapp.jsonify(OrderForFix)
 
 
 @rootflaskapp.app.route('/orders_edit')
