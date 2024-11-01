@@ -87,24 +87,28 @@ inputvehicleRegNumber.addEventListener('keydown', function () {
 });
 inputvehicleRegNumber.addEventListener('keyup', function () {
     if (inputvehicleRegNumber.value != dataGlobal.IdProducts) {
-        // muượn cu duy
-        // fetch('/checkVehicle', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ vehicle: inputvehicleRegNumber.value })
-        // }).then(function (response) {
-        //     return response.json();
-        // }).then(function (data) {
-        //     if (data.status == "fail") {
-        //         messagevehicleRegNumber.innerHTML = 'Vehicle will be changed';
-        //         isCanSubmit = true;
-        //     } else {
-        //         messagevehicleRegNumber.innerHTML = 'Vehicle not found';
-        //         isCanSubmit = false;
-        //     }
-        // });
+        fetch('/checkRegistrationNumber', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ registrationNumber: inputvehicleRegNumber.value })
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            if (data.status != 'existed registrationNumber' && data.status != 'OK') {
+                messagevehicleRegNumber.innerHTML = data.status;
+                isCanSubmit = false;
+            }
+            if (data.status == 'existed registrationNumber') {
+                messagevehicleRegNumber.innerHTML = '';
+                isCanSubmit = true;
+            }
+            if (data.status == 'OK') {
+                messagevehicleRegNumber.innerHTML = 'registrationNumber does not exist';
+                isCanSubmit = false;
+            }
+        });
 
     }
 });

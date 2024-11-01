@@ -46,8 +46,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Thao tác</h6>
-                        <a class="collapse-item" href="../users/list-user.html">Danh sách</a>
-                        <a class="collapse-item" href="../users/add-user.html">Thêm </a>
+                        <a class="collapse-item" href="/list_users">Danh sách</a>
+                        <a class="collapse-item" href="/add_user">Thêm </a>
                     </div>
                 </div>
             </li>
@@ -61,8 +61,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Thao tác</h6>
-                        <a class="collapse-item" href="../customer/list-customer.html">Danh sách</a>
-                        <a class="collapse-item" href="../customer/add-customer.html">Thêm </a>
+                        <a class="collapse-item" href="/customer_list">Danh sách</a>
+                        <a class="collapse-item" href="/customer_add">Thêm </a>
                     </div>
                 </div>
             </li>
@@ -77,8 +77,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Thao tác</h6>
-                        <a class="collapse-item" href="../products/list-product.html">Danh sách</a>
-                        <a class="collapse-item" href="../products/add-product.html">Thêm</a>
+                        <a class="collapse-item" href="/products_list">Danh sách</a>
+                        <a class="collapse-item" href="/products_add">Thêm</a>
                     </div>
                 </div>
             </li>
@@ -162,59 +162,91 @@
                                 </div>
                                 <div class="card-body">
                                     <!-- <form action="process_order.php" method="post" enctype="multipart/form-data"> -->
-                                        <div class="form-group">
-                                            <label for="invoiceId">Mã số hóa đơn</label>
-                                            <div id="messageinvoiceId" style="color: red; font-style: italic; font-size: 10px"></div>
-                                            <input type="text" class="form-control" id="invoiceId" name="invoiceId"
-                                                placeholder="Nhập mã số hóa đơn" required disabled="false">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="orderDate">Ngày đặt</label>
-                                            <div id="messageorderDate" style="color: red; font-style: italic; font-size: 10px"></div>
-                                            <input type="date" class="form-control" id="orderDate" name="orderDate"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="employeeName">ID nhân viên</label>
-                                            <div id="messageemployeeName" style="color: red; font-style: italic; font-size: 10px"></div>
-                                            <input type="text" class="form-control" id="employeeName"
-                                                placeholder="Nhập ID nhân viên">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="endTime">Thời gian kết thúc</label>
-                                            <div id="messageendTime" style="color: red; font-style: italic; font-size: 10px"></div>
-                                            <input type="date" class="form-control" id="endTime" name="endTime"
-                                                required>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="invoiceId">Mã số hóa đơn</label>
+                                        <div id="messageinvoiceId"
+                                            style="color: red; font-style: italic; font-size: 10px"></div>
+                                        <input type="text" class="form-control" id="invoiceId" name="invoiceId"
+                                            placeholder="Nhập mã số hóa đơn" required disabled="false">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="orderDate">Ngày đặt</label>
+                                        <div id="messageorderDate"
+                                            style="color: red; font-style: italic; font-size: 10px"></div>
+                                        <input type="date" class="form-control" id="orderDate" name="orderDate"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="employeeName">ID nhân viên</label>
+                                        <div id="messageemployeeName"
+                                            style="color: red; font-style: italic; font-size: 10px"></div>
+                                        <input type="text" class="form-control" id="employeeName"
+                                            placeholder="Nhập ID nhân viên">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="endTime">Thời gian kết thúc</label>
+                                        <div id="messageendTime"
+                                            style="color: red; font-style: italic; font-size: 10px"></div>
+                                        <input type="date" class="form-control" id="endTime" name="endTime" required>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="renterCccd">Số CCCD người thuê</label>
-                                            <div id="messagerenterCccd" style="color: red; font-style: italic; font-size: 10px"></div>
-                                            <input type="text" class="form-control" id="renterCccd" name="renterCccd"
-                                                placeholder="Nhập số CCCD" required>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="renterCccd">Số CCCD người thuê</label>
+                                        <div id="messagerenterCccd"
+                                            style="color: red; font-style: italic; font-size: 10px" url=""></div>
+                                        <input type="text" class="form-control" id="renterCccd" name="renterCccd"
+                                            placeholder="Nhập số CCCD" required>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="vehicleRegNumber">Số đăng ký xe</label>
-                                            <div id="messagevehicleRegNumber" style="color: red; font-style: italic; font-size: 10px"></div>
-                                            <input type="text" class="form-control" id="vehicleRegNumber"
-                                                name="vehicleRegNumber" placeholder="Nhập số đăng ký xe" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <div id="messagepaymentStatus" style="color: red; font-style: italic; font-size: 10px"></div>
-                                            <label for="paymentStatus">Trạng thái thanh toán</label>
-                                            <select id="paymentStatus" name="paymentStatus" class="form-control"
-                                                required>
-                                                <option value="Chưa thanh toán">Chưa thanh toán</option>
-                                                <option value="Đã thanh toán">Đã thanh toán</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary" id="btnAddOrder">Thêm đơn hàng</button>
-                                    <!-- </form> -->
+                                    <div class="form-group">
+                                        <label for="vehicleRegNumber">Số đăng ký xe</label>
+                                        <div id="messagevehicleRegNumber"
+                                            style="color: red; font-style: italic; font-size: 10px"></div>
+                                        <input type="text" class="form-control" id="vehicleRegNumber"
+                                            name="vehicleRegNumber" placeholder="Nhập số đăng ký xe" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <div id="messagepaymentStatus"
+                                            style="color: red; font-style: italic; font-size: 10px"></div>
+                                        <label for="paymentStatus">Trạng thái thanh toán</label>
+                                        <select id="paymentStatus" name="paymentStatus" class="form-control" required>
+                                            <option value="Chưa thanh toán">Chưa thanh toán</option>
+                                            <option value="Đã thanh toán">Đã thanh toán</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary" id="btnAddOrder">Thêm đơn
+                                            hàng</button>
+                                        <!-- </form> -->
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Modal Logout -->
+                            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Bạn có chắc muốn đăng xuất?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-primary"
+                                                data-dismiss="modal">Hủy</button>
+                                            <a href="login.html" class="btn btn-primary">Đăng xuất</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
+                        <!--Row-->
+
                         <!-- Modal Logout -->
                         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
@@ -232,55 +264,29 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-primary"
                                             data-dismiss="modal">Hủy</button>
-                                        <a href="login.html" class="btn btn-primary">Đăng xuất</a>
+                                        <a href="#" class="btn btn-primary">Đăng xuất</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-                    <!--Row-->
-
-                    <!-- Modal Logout -->
-                    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Bạn có chắc muốn đăng xuất?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-primary"
-                                        data-dismiss="modal">Hủy</button>
-                                    <a href="#" class="btn btn-primary">Đăng xuất</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <!---Container Fluid-->
                 </div>
-                <!---Container Fluid-->
+
             </div>
-
         </div>
-    </div>
 
-    <!-- Scroll to top -->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+        <!-- Scroll to top -->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-    <script src="{{url_for('static', filename='/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{url_for('static', filename='/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-    <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
-    <script src="{{url_for('static', filename='/handle/orders/add-order.js')}}"></script>
+        <script src="{{url_for('static', filename='/vendor/jquery/jquery.min.js')}}"></script>
+        <script src="{{url_for('static', filename='/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+        <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
+        <script src="{{url_for('static', filename='/handle/orders/add-order.js')}}"></script>
 </body>
 
 </html>

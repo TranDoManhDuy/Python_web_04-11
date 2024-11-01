@@ -37,7 +37,7 @@ inputemployeeName.addEventListener('keydown', function () {
 inputemployeeName.addEventListener('keyup', function () {
     // Đợi chị thảo :
     if (!/^\d+$/.test(inputemployeeName.value)) {
-        messageemployeeName.innerHTML = 'CCCD number must be a number';
+        messageemployeeName.innerHTML = 'ID number must be a number';
         isCanSubmit = false;
     } else
     // if (inputemployeeName.value.length != 12) {
@@ -83,8 +83,10 @@ inputrenterCccd.addEventListener('keyup', function () {
                         messagerenterCccd.innerHTML = '';
                         isCanSubmit = true;
                     } else {
-                        messagerenterCccd.innerHTML = 'CCCD does not exist';
-                        isCanSubmit = false;
+                        messagerenterCccd.innerHTML='CCCD not found in the system, please add the customer first';
+                        // messagerenterCccd.window.location.href = '/customer_add';
+                        // isCanSubmit = false;
+                        
                     }
                 });
         }
@@ -99,13 +101,34 @@ inputvehicleRegNumber.addEventListener('keydown', function () {
     messagevehicleRegNumber.innerHTML = '';
 });
 inputvehicleRegNumber.addEventListener('keyup', function () {
-    // Đợi cu duy :
-    // if (inputvehicleRegNumber.value == '') {
-    //     messagevehicleRegNumber.innerHTML = 'Vehicle Reg Number is required';
-    //     isCanSubmit = false;
-    // } else {
-    //     isCanSubmit = true;
-    // }
+    if (inputvehicleRegNumber.value != '') {
+        fetch('/checkRegistrationNumber', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                registrationNumber: inputvehicleRegNumber.value
+            })
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.status != 'existed registrationNumber' && data.status != 'OK') {
+                    messagevehicleRegNumber.innerHTML = data.status;
+                    isCanSubmit = false;
+                }
+                if (data.status == 'existed registrationNumber') {
+                    messagevehicleRegNumber.innerHTML = '';
+                    isCanSubmit = true;
+                }
+                if (data.status == 'OK') {
+                    messagevehicleRegNumber.innerHTML = 'registrationNumber does not exist';
+                    isCanSubmit = false;
+                }
+            });
+    }
 });
 inputpaymentStatus.addEventListener('blur', function () {
     if (inputpaymentStatus.value == '') {
@@ -144,36 +167,62 @@ inputendTime.addEventListener('keyup', function () {
 
 btnAddOrder.addEventListener('click', function () {
     if (isCanSubmit && inputinvoiceId.value != '' && inputorderDate.value != '' && inputemployeeName.value != '' && inputendTime.value != '' && inputrenterCccd.value != '' && inputvehicleRegNumber.value != '' && inputpaymentStatus.value != '') {
-        fetch("/addOrder", {
+        fetch('/checkCCCD', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                Id: inputinvoiceId.value,
-                DateOfBooking: inputorderDate.value,
-                IdStaff: inputemployeeName.value,
-                DateOfEnd: inputendTime.value,
-                IdCustomer: inputrenterCccd.value,
-                IdProducts: inputvehicleRegNumber.value,
-                Status: inputpaymentStatus.value
+                CCCD: inputrenterCccd.value
             })
         })
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
-                if (data.status == 'success') {
-                    alert('Add order success');
-                    window.location.href = '/orders_list';
-                } else
-                    if (data.status == 'fail') {
-                        alert('Add order fail');
-                    }
-                    else {
-                        alert(data.error);
-                    }
+                if (data.status == 'fail') {
+                    messagerenterCccd.innerHTML = '';
+                    isCanSubmit = true;
+                } else {
+                    alert('CCCD not found in the system, please add the customer first');
+                    isCanSubmit = false;
+                    window.location.href = '/customer_add';
+                }
             });
+        if (isCanSubmit) {
+            fetch("/addOrder", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    Id: inputinvoiceId.value,
+                    DateOfBooking: inputorderDate.value,
+                    IdStaff: inputemployeeName.value,
+                    DateOfEnd: inputendTime.value,
+                    IdCustomer: inputrenterCccd.value,
+                    IdProducts: inputvehicleRegNumber.value,
+                    Status: inputpaymentStatus.value
+                })
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (data.status == 'success') {
+                        alert('Add order success');
+                        window.location.href = '/orders_list';
+                    } else
+                        if (data.status == 'fail') {
+                            alert('Add order fail');
+                        }
+                        else {
+                            alert(data.error);
+                        }
+                });
+        }
+    } else {
+        alert('Please fill in all required fields');
     }
 });
 function getNewIdorder() {

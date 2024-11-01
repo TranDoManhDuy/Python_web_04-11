@@ -10,9 +10,14 @@ import products as pro  # import product
 # ///////////////////////////////////////////////////////////
 
 
-def transformTime(time):
+def transformTime(time: str):
     time = datetime.datetime.strptime(time, '%Y/%m/%d').date()
     return time.strftime('%d/%m/%Y')
+
+
+def transformTime1(time: str):
+    time = datetime.datetime.strptime(time, '%d/%m/%Y').date()
+    return time.strftime('%Y/%m/%d')
 
 
 class Time:
@@ -117,8 +122,8 @@ class Order:  # hóa đơn số ít
                 "IdStaff": self.__id_Staff,
                 "IdCustomer": cus.flaskCustomers.getCustomersOfId(self.__Id_Customer).getSSN(),
                 "IdProducts": pro.danhsachPT.layPttheoID(self.__id_Products).getSodangki(),
-                "DateOfBooking": self.__date_of_booking.__str__().replace("/", "-"),
-                "DateOfEnd": self.__date_of_end.__str__().replace("/", "-"),
+                "DateOfBooking": transformTime(self.__date_of_booking.__str__()). replace("/", "-"),
+                "DateOfEnd": transformTime(self.__date_of_end.__str__()).replace("/", "-"),
                 "Status": self.__status.__str__()}
 
 
@@ -284,6 +289,8 @@ def editOrder():
 
 @rootflaskapp.app.route('/getOrderFix')
 def getOrderFix():
+    OrderForFix["DateOfBooking"] = transformTime1(OrderForFix["DateOfBooking"].replace("-", "/")).replace("/", "-")
+    OrderForFix["DateOfEnd"] = transformTime1(OrderForFix["DateOfEnd"].replace("-", "/")).replace("/", "-")
     return rootflaskapp.jsonify(OrderForFix)
 
 
