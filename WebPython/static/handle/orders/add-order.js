@@ -39,13 +39,28 @@ inputemployeeName.addEventListener('keyup', function () {
     if (!/^\d+$/.test(inputemployeeName.value)) {
         messageemployeeName.innerHTML = 'ID number must be a number';
         isCanSubmit = false;
-    } else
-    // if (inputemployeeName.value.length != 12) {
-    //     messageemployeeName.innerHTML = 'CCCD number must be 12 characters';
-    //     canSubmit = false;
-    // }
-    {
-        isCanSubmit = true;
+    } else {
+        fetch('/checkExist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                Id: inputemployeeName.value
+            })
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.status == 'true') {
+                    messageemployeeName.innerHTML = '';
+                    isCanSubmit = true;
+                } else {
+                    messageemployeeName.innerHTML = 'ID number does not exist';
+                    isCanSubmit = true;
+                }
+            });
     }
 });
 
@@ -83,10 +98,8 @@ inputrenterCccd.addEventListener('keyup', function () {
                         messagerenterCccd.innerHTML = '';
                         isCanSubmit = true;
                     } else {
-                        messagerenterCccd.innerHTML='CCCD not found in the system, please add the customer first';
-                        // messagerenterCccd.window.location.href = '/customer_add';
-                        // isCanSubmit = false;
-                        
+                        messagerenterCccd.innerHTML = 'CCCD not found in the system, please add the customer first';      
+                        isCanSubmit = false;           
                     }
                 });
         }
@@ -128,6 +141,31 @@ inputvehicleRegNumber.addEventListener('keyup', function () {
                     isCanSubmit = false;
                 }
             });
+        if (isCanSubmit = true) {
+            fetch('/checkreadyVehicle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: inputvehicleRegNumber.value
+                })
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (data.status == 'fail') {
+                        messagevehicleRegNumber.innerHTML = 'Vehicle is not ready';
+                        isCanSubmit = false;
+                    }
+                    if (data.status == 'success') {
+                        messagevehicleRegNumber.innerHTML = '';
+                        isCanSubmit = true;
+                    }
+                }
+                );
+        }
     }
 });
 inputpaymentStatus.addEventListener('blur', function () {
