@@ -165,30 +165,33 @@
                   <form action="" method="">
                     <div class="form-group">
                       <label for="employeeName">Tên nhân viên</label>
+                      <div id="messName" style="color: red; font-size: 10px"></div>
                       <input type="text" class="form-control" id="employeeName" placeholder="Nhập tên nhân viên">
                     </div>
                     <div class="form-group">
                       <label for="employeePhone">Số điện thoại</label>
+                      <div id="messPhone" style="color: red; font-size: 10px"></div>
                       <input type="text" class="form-control" id="employeePhone" placeholder="Nhập số điện thoại">
                     </div>
                     <div class="form-group">
                       <label for="employeeAddress">Địa chỉ</label>
+                      <div id="messAddress" style="color: red; font-size: 10px"></div>
                       <input type="text" class="form-control" id="employeeAddress" placeholder="Nhập địa chỉ">
                     </div>
                     <div class="form-group">
-                      <label for="employeeAddress">Lương/ tháng</label>
-                      <input type="number" class="form-control" id="employeeAddress" placeholder="Nhập lương">
+                      <label for="employeeSalary">Lương/ tháng</label>
+                      <div id="messSalary" style="color: red; font-size: 10px"></div>
+                      <input type="number" class="form-control" id="employeeSalary" placeholder="Nhập lương">
                     </div>
                     <div class="form-group">
                       <label for="employeeRole">Chức vụ</label>
-                      <select class="form-control" id="employeeRole">
-                        <option>Nhân viên</option>
-                        <option>Quản trị</option>
+                      <select class="form-control" id="employeePosition">
+                        <option value="Staff">Nhân viên</option>
+                        <option value="Manager">Quản trị</option>
                       </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Sửa nhân viên</button>
+                    <div id="submitBtn" class="btn btn-primary">Sửa nhân viên</div>
                   </form>
-                  
                 </div>
               </div>
             </div>
@@ -255,6 +258,7 @@
   <script src="{{url_for('static', filename='/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
   <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
+  <script src="{{url_for('static', filename='/handle/users/edit-user.js')}}"></script>
 
 </body>
 
