@@ -229,7 +229,6 @@ def chuyentrang_fixCustomer():
 def getIDCustomerForFix():
     if rootflaskapp.request.method == 'POST':
         data = rootflaskapp.request.get_json()
-        print(data, "DATA_____________________________")
         cu = flaskCustomers.getCustomersOfId(data["id"]).__dir__()
         global fixCustomer
         fixCustomer = cu
@@ -315,7 +314,6 @@ def checkEmail():
 
 @rootflaskapp.app.route('/chuyentrang_listCustomer', methods=["GET"])
 def chuyentrangDSKH():
-    print("chuyentrangDSKH------------------------------------")
     return rootflaskapp.redirect(rootflaskapp.url_for("customer_list"))
 
 
