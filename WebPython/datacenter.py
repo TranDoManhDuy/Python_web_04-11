@@ -1,5 +1,10 @@
 import sqlite3
-import sqlite3
+# sql = sqlite3.connect('WebPython/data.db')
+# cur = sql.cursor()
+
+
+# sql.commit()
+# sql.close()
 # c.execute("""
 #     CREATE TABLE IF NOT EXISTS CUSTOMER(
 #         ID TEXT PRIMARY KEY,
@@ -49,7 +54,9 @@ import sqlite3
 #         FOREIGN KEY (IDVehicle) REFERENCES VEHICLE(ID) ON DELETE CASCADE ON UPDATE CASCADE
 #     )
 # """)
-## MM/DD/YYYY
+# MM/DD/YYYY
+
+
 def takedata(lenh):  # lenh truy van sql
     with sqlite3.connect('WebPython/data.db') as conn:
         c = conn.cursor()
@@ -57,9 +64,9 @@ def takedata(lenh):  # lenh truy van sql
         respon = c.fetchall()
         print(respon)
         return respon
-    
+
+
 def pushdata(lenh):  # lenh truy van sql
-    print(lenh)
     with sqlite3.connect('WebPython/data.db') as conn:
         c = conn.cursor()
         c.execute(lenh)

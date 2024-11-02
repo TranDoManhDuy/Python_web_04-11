@@ -9,140 +9,132 @@
   <meta name="author" content="">
   <link href="{{url_for('static', filename='/img/logo/logo.png')}}" rel="icon">
   <title>Danh sách khách hàng</title>
-  <link href="{{url_for('static', filename='/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{url_for('static', filename='/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{url_for('static', filename='/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet"
+    type="text/css">
+  <link href="{{url_for('static', filename='/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet"
+    type="text/css">
   <link href="{{url_for('static', filename='/css/ruang-admin.min.css')}}" rel="stylesheet">
 </head>
 
 <body id="page-top">
   <div id="wrapper">
-<!-- Sidebar -->
-<ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" href>
-      <div class="sidebar-brand-icon">
-        <img src="{{url_for('static', filename='/img/logo/logo.png')}}">
-      </div>
-      <div class="sidebar-brand-text mx-3">Ride and Rent</div>
-  </a>
-  <hr class="sidebar-divider my-0">
-  <li class="nav-item">
-      <a class="nav-link" href="../statistical/statistical.html">
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href>
+        <div class="sidebar-brand-icon">
+          <img src="{{url_for('static', filename='/img/logo/logo.png')}}">
+        </div>
+        <div class="sidebar-brand-text mx-3">Ride and Rent</div>
+      </a>
+      <hr class="sidebar-divider my-0">
+      <li class="nav-item">
+        <a class="nav-link" href="../statistical/statistical.html">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Thống kê</span></a>
-  </li>
-  <hr class="sidebar-divider">
-  <div class="sidebar-heading">
-      Quản lý
-  </div>
-  <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable1"
-          aria-expanded="true"
+      </li>
+      <hr class="sidebar-divider">
+      <div class="sidebar-heading">
+        Quản lý
+      </div>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable1" aria-expanded="true"
           aria-controls="collapseTable">
           <i class="fas fa-fw fa-user"></i>
           <span>Quản lý nhân viên</span>
-      </a>
-      <div id="collapseTable1" class="collapse" aria-labelledby="headingTable"
-          data-parent="#accordionSidebar">
+        </a>
+        <div id="collapseTable1" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Thao tác</h6>
-              <a class="collapse-item" href="../users/list-user.html">Danh sách</a>
-              <a class="collapse-item" href="../users/add-user.html">Thêm </a>
+            <h6 class="collapse-header">Thao tác</h6>
+            <a class="collapse-item" href="/list_users">Danh sách</a>
+            <a class="collapse-item" href="/add_user">Thêm </a>
           </div>
-      </div>
-  </li>
-  <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable12"
-          aria-expanded="true"
-          aria-controls="collapseTable">
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable12"
+          aria-expanded="true" aria-controls="collapseTable">
           <i class="fas fa-fw fa-users"></i>
           <span>Quản lý khách hàng</span>
-      </a>
-      <div id="collapseTable12" class="collapse" aria-labelledby="headingTable"
-          data-parent="#accordionSidebar">
+        </a>
+        <div id="collapseTable12" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Thao tác</h6>
-              <a class="collapse-item" href="../customer/list-customer.html">Danh sách</a>
-              <a class="collapse-item" href="../customer/add-customer.html">Thêm </a>
+            <h6 class="collapse-header">Thao tác</h6>
+            <div style="cursor: pointer" class="collapse-item" id="chuyentrangDSKH">Danh sách</div>
+            <div style="cursor: pointer" class="collapse-item" id="themKH">Thêm</div>
           </div>
-      </div>
-  </li>
-  
-  <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable3"
-          aria-expanded="true"
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable3" aria-expanded="true"
           aria-controls="collapseTable">
           <i class="fas fa-fw fa-car"></i>
           <span>Quản lý xe</span>
-      </a>
-      <div id="collapseTable3" class="collapse" aria-labelledby="headingTable"
-          data-parent="#accordionSidebar">
+        </a>
+        <div id="collapseTable3" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Thao tác</h6>
-              <a class="collapse-item" href="../products/list-product.html">Danh sách</a>
-              <a class="collapse-item" href="../products/add-product.html">Thêm</a>
+            <h6 class="collapse-header">Thao tác</h6>
+            <a class="collapse-item" href="/products_list">Danh sách</a>
+            <a class="collapse-item" href="/products_add">Thêm</a>
           </div>
-      </div>
-  </li>
-  <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable4"
-          aria-expanded="true"
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable4" aria-expanded="true"
           aria-controls="collapseTable">
           <i class="fas fa-fw fa-clipboard-list"></i>
 
           <span>Quản lý đơn hàng</span>
-      </a>
-      <div id="collapseTable4" class="collapse" aria-labelledby="headingTable"
-          data-parent="#accordionSidebar">
+        </a>
+        <div id="collapseTable4" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Thao tác</h6>
-              <a class="collapse-item" href="../orders/list-order.html">Danh sách</a>
-              <a class="collapse-item" href="../orders/add-order.html">Thêm</a>
+            <h6 class="collapse-header">Thao tác</h6>
+            <a class="collapse-item" href="/orders_list">Danh sách</a>
+            <a class="collapse-item" href="/orders_add">Thêm</a>
           </div>
-      </div>
-  </li>
-</ul>
-<!-- Sidebar -->
+        </div>
+      </li>
+    </ul>
+    <!-- Sidebar -->
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
-<!-- TopBar -->
-<nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-  <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
-      <i class="fa fa-bars"></i>
-  </button>
-  <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown no-arrow">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              <img class="img-profile rounded-circle" src="https://media.vov.vn/sites/default/files/styles/large/public/2020-10/st.jpg"
+        <!-- TopBar -->
+        <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+          <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <img class="img-profile rounded-circle"
+                  src="https://media.vov.vn/sites/default/files/styles/large/public/2020-10/st.jpg"
                   style="max-width: 60px">
-              <span class="ml-2 d-none d-lg-inline text-white small">Mạnh Duy</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-              aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="../profile/view.html">
+                <span class="ml-2 d-none d-lg-inline text-white small">Mạnh Duy</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="../profile/view.html">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Hồ sơ
-              </a>
-              <a class="dropdown-item" href="#">
+                </a>
+                <a class="dropdown-item" href="#">
                   <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                   Cài đặt
-              </a>
-              <a class="dropdown-item" href="#">
+                </a>
+                <a class="dropdown-item" href="#">
                   <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                   Lịch hoạt động
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal"
-                  data-target="#logoutModal">
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Đăng xuất
-              </a>
-          </div>
-      </li>
-  </ul>
-</nav>
-<!-- Topbar -->
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <!-- Topbar -->
         <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -155,8 +147,9 @@
           </div>
           <div class="card bg-white mb-3">
             <form action="" class="form p-3">
-              <input class="form-control" type="text" placeholder="Tìm kiếm">
-              <button class="btn btn-primary mt-2">Tìm kiếm</button>
+              <input class="form-control" type="text" placeholder="Tìm kiếm theo tên khách hàng"
+                id="InputCustomerSearch">
+              <button class="btn btn-primary mt-2" id="buttonSearch">Tìm kiếm</button>
             </form>
           </div>
           <div class="row">
@@ -179,72 +172,21 @@
                         <th>Thao tác</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>#01</td>
-                        <td>0999888777</td>
-                        <td>B123456789</td> <!-- ID bằng lái xe -->
-                        <td>nguyenthao@gmail.com</td> <!-- Email -->
-                        <td>Nguyễn</td> <!-- Họ -->
-                        <td>Thảo</td> <!-- Tên -->
-                        <td>123456789012</td> <!-- Số CCCD -->
-                        <td>
-                          <a href="./edit-customer.html" class="btn btn-sm btn-primary">Sửa</a>
-                          <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>#01</td>
-                        <td>0999888777</td>
-                        <td>B123456789</td> <!-- ID bằng lái xe -->
-                        <td>tranduy@gmail.com</td> <!-- Email -->
-                        <td>Trần</td> <!-- Họ -->
-                        <td>Duy</td> <!-- Tên -->
-                        <td>123456789012</td> <!-- Số CCCD -->
-                        <td>
-                          <a href="./edit-customer.html" class="btn btn-sm btn-primary">Sửa</a>
-                          <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>#01</td>
-                        <td>0999888777</td>
-                        <td>B123456789</td> <!-- ID bằng lái xe -->
-                        <td>tranni@gmail.com</td> <!-- Email -->
-                        <td>Trần</td> <!-- Họ -->
-                        <td>Ni</td> <!-- Tên -->
-                        <td>123456789012</td> <!-- Số CCCD -->
-                        <td>
-                          <a href="./edit-customer.html" class="btn btn-sm btn-primary">Sửa</a>
-                          <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>#01</td>
-                        <td>0999888777</td>
-                        <td>B123456789</td> <!-- ID bằng lái xe -->
-                        <td>nguyenvana@gmail.com</td> <!-- Email -->
-                        <td>Nguyễn</td> <!-- Họ -->
-                        <td>Văn A</td> <!-- Tên -->
-                        <td>123456789012</td> <!-- Số CCCD -->
-                        <td>
-                          <a href="./edit-customer.html" class="btn btn-sm btn-primary">Sửa</a>
-                          <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>#01</td>
-                        <td>0999888777</td>
-                        <td>B123456789</td> <!-- ID bằng lái xe -->
-                        <td>nguyenvanb@gmail.com</td> <!-- Email -->
-                        <td>Nguyễn</td> <!-- Họ -->
-                        <td>Văn B</td> <!-- Tên -->
-                        <td>123456789012</td> <!-- Số CCCD -->
-                        <td>
-                          <a href="./edit-customer.html" class="btn btn-sm btn-primary">Sửa</a>
-                          <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                        </td>
-                      </tr>
+                    <tbody id="LIST_PRODUCT_CONTAINER">
+                      <!-- <tr> -->
+                      <!-- <td>#01</td> -->
+                      <!-- <td>0999888777</td> -->
+                      <!-- <td>B123456789</td> ID bằng lái xe -->
+                      <!-- <td>nguyenthao@gmail.com</td> Email -->
+                      <!-- <td>Nguyễn</td> Họ -->
+                      <!-- <td>Thảo</td> Tên -->
+                      <!-- <td>123456789012</td> Số CCCD -->
+                      <!-- <td> -->
+                      <!-- <a href="./edit-customer.html" class="btn btn-sm btn-primary">Sửa</a> -->
+                      <!-- <a href="#" class="btn btn-sm btn-danger">Xóa</a> -->
+                      <!-- </td> -->
+                      <!-- </tr> -->
+
                     </tbody>
                   </table>
                 </div>
@@ -252,9 +194,10 @@
               </div>
             </div>
           </div>
-        
+
           <!-- Modal Logout -->
-          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
+          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -274,10 +217,10 @@
             </div>
           </div>
         </div>
-        
+
         <!---Container Fluid-->
       </div>
-      
+
       <!-- Footer -->
     </div>
   </div>
@@ -291,6 +234,8 @@
   <script src="{{url_for('static', filename='/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{url_for('static', filename='/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
   <script src="{{url_for('static', filename='/js/ruang-admin.min.js')}}"></script>
+
+  <script src="{{url_for('static', filename='/handle/customer/list-customer.js')}}"></script>
 
 </body>
 
