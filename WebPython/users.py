@@ -174,6 +174,7 @@ def addStaff():
 
 
 def checkExist(ID):
+    fetchDataStaff()
     for staff in listStaff.listStaff:
         if staff.getID() == ID:
             return True
