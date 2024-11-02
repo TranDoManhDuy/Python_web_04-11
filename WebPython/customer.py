@@ -66,8 +66,7 @@ class Clients:  # khach hang so nhieu
             print("Email is not valid")
         else:
             self.__clients.append(client)
-            pushdata(f"INSERT INTO khachhang VALUES ({client.getId()}, '{client.getName().Lname}', '{
-                     client.getName().Fname}', '{client.getEmail()}', '{client.getPhone()}', '{client.getIdlicense()}')")
+            pushdata(f"INSERT INTO khachhang VALUES ({client.getId()}, '{client.getName().Lname}', '{client.getName().Fname}', '{client.getEmail()}', '{client.getPhone()}', '{client.getIdlicense()}')")
             return True
         return False
 
@@ -93,8 +92,7 @@ class Clients:  # khach hang so nhieu
         else:
             self.__clients[self.__clients.index(
                 self.getClientOfId(Id))] = client
-            pushdata(f"UPDATE khachhang SET soCCCD = {client.getId()}, ho = '{client.getName().Lname}', ten = '{client.getName().Fname}', email = '{
-                     client.getEmail()}', sdt = '{client.getPhone()}', idBanglaixe = '{client.getIdlicense()}' WHERE soCCCD = {Id}")
+            pushdata(f"UPDATE khachhang SET soCCCD = {client.getId()}, ho = '{client.getName().Lname}', ten = '{client.getName().Fname}', email = '{client.getEmail()}', sdt = '{client.getPhone()}', idBanglaixe = '{client.getIdlicense()}' WHERE soCCCD = {Id}")
             return True
         return False
 

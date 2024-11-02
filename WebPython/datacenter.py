@@ -51,7 +51,7 @@ import sqlite3
 # """)
 ## MM/DD/YYYY
 def takedata(lenh):  # lenh truy van sql
-    with sqlite3.connect('WebPython/data.db') as conn:
+    with sqlite3.connect('./data.db') as conn:
         c = conn.cursor()
         c.execute(lenh)
         respon = c.fetchall()
@@ -59,7 +59,7 @@ def takedata(lenh):  # lenh truy van sql
     
 def pushdata(lenh):  # lenh truy van sql
     print(lenh)
-    with sqlite3.connect('WebPython/data.db') as conn:
+    with sqlite3.connect('./data.db') as conn:
         c = conn.cursor()
         c.execute(lenh)
         conn.commit()
