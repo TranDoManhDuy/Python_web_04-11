@@ -147,6 +147,19 @@ def products_getListPT():
         danhsachPT.sortList()
         return rootflaskapp.jsonify(danhsachPT.getlist())
 # Them phuong tien vao database
+
+def getStatusPT(ID):
+    fetchDataFromDB()
+    for pt in danhsachPT.getlist():
+        if pt["id"] == ID:
+            return pt["ready"]
+def getExistID(ID):
+    fetchDataFromDB()
+    for pt in danhsachPT.getlist():
+        if pt["id"] == ID:
+            return True
+    return False
+
 @rootflaskapp.app.route("/addVehicle", methods=["POST"])
 def products_addPT():
     if rootflaskapp.request.method == "POST":

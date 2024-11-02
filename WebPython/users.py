@@ -173,15 +173,11 @@ def addStaff():
     return rootflaskapp.jsonify({"status": "success"})
 
 
-
-
-
-
-
-
-
-
-
+def checkExist(ID):
+    for staff in listStaff.listStaff:
+        if staff.getID() == ID:
+            return True
+    return False
 
 @rootflaskapp.app.route("/list_users")
 def list_user():
