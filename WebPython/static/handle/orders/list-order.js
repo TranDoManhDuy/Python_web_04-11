@@ -21,7 +21,7 @@ function renderlistOrder(listOrder) {
             <td>${orderI.DateOfEnd}</td>
             <td>${orderI.IdCustomer}</td>
             <td>${orderI.IdProducts}</td>
-            <td>chua co du lieu</td>
+            <td>${orderI.UnitPrice}</td>
             <td>${orderI.Status}</td>                   
             <td>
             <div style="cursor: pointer" class="btn btn-sm btn-primary" onclick=getIDOrderForFix('${orderI.Id}')>Sửa</div>

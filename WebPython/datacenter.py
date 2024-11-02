@@ -62,7 +62,7 @@ def takedata(lenh):  # lenh truy van sql
         c = conn.cursor()
         c.execute(lenh)
         respon = c.fetchall()
-        print(respon)
+        # print(respon)
         return respon
 
 

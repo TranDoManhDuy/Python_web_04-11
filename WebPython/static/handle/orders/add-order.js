@@ -232,6 +232,7 @@ function getNewIdorder() {
         })
         .then(function (data) {
             inputinvoiceId.value = data.id;
+            inputorderDate.value = data.today;
         });
 }
 getNewIdorder();
