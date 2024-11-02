@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <body>
+        <div style="
+            display: block;
+            border: 1px solid #000;
+            padding: 15px;
+            background-color: #f1f1f1;
+            width: 50%;
+            margin: 0 auto;
+        ">
+        <!-- MA_SO_HOA_DON = MA_SO_HOA_DON, 
+        NGAY_BAT_DAU = NGAY_BAT_DAU, 
+        NGAY_KET_THUC = NGAY_KET_THUC, 
+        TONG_TIEN = TONG_TIEN, 
+        TRANG_THAI = TRANG_THAI, 
+        TEN_KHACH_HANG = TEN_KHACH_HANG, 
+        SDT_KHACH_HANG = SDT_KHACH_HANG, 
+        EMAIL_KHACH_HANG = receiver_email, 
+        MA_SO_NHAN_VIEN_BAN_HANG = MA_SO_NHAN_VIEN_BAN_HANG, 
+        TEN_NHAN_VIEN_BAN_HANG = TEN_NHAN_VIEN_BAN_HANG, 
+        SDT_NHAN_VIEN_BAN_HANG = SDT_NHAN_VIEN_BAN_HANG, 
+        TEN_PHUONG_TIEN = TEN_PHUONG_TIEN, 
+        SO_DANG_KY = SO_DANG_KY, 
+        LOAI_PHUONG_TIEN = LOAI_PHUONG_TIEN, 
+        DANH_MUC = DANH_MUC, 
+        GIA_THUE = GIA_THUE -->
+            <div style="text-align: center; font-size: 30px; font-weight: 700">
+                Hóa đơn thanh toán </div>
+            <div id="A">
+                <Label style="font-weight: 700">A - Thong tin don hang</Label>
+                <li>1. Mã số hóa đơn: {{MA_SO_HOA_DON}}</li>
+                <li>2. Ngày bắt đầu thuê: {{NGAY_BAT_DAU}}</li>
+                <li>3. Ngày kết thúc: {{NGAY_KET_THUC}}</li>
+                <li>4. Tổng số tiền: {{TONG_TIEN}}</li>
+                <li>5. Trạng thái: {{TRANG_THAI}}</li>
+            </div>
+            <div id="B">
+                <Label style="font-weight: 700">B - Thong tin khách hàng</Label>
+                <li>1. Tên khách hàng: {{TEN_KHACH_HANG}}</li>
+                <li>2. Số điện thoại: {{SDT_KHACH_HANG}}</li>
+                <li>3. Email: {{EMAIL_KHACH_HANG}}</li>
+            </div>
+            <div id="C">
+                <Label style="font-weight: 700">C - Thong tin nhân viên thực hiện giao dịch</Label>
+                <li>1. Tên nhân viên: {{TEN_NHAN_VIEN_BAN_HANG}}</li>
+                <li>2. Số điện thoại: {{SDT_NHAN_VIEN_BAN_HANG}}</li>
+                <li>3. Mã số nhân viên: {{MA_SO_NHAN_VIEN_BAN_HANG}}</li>
+            </div>
+            <div id="D">
+                <Label style="font-weight: 700">D - Thong tin phương tiện</Label>
+                <li>1. Danh mục: {{DANH_MUC}}</li>
+                <li>2. Loai: {{LOAI_PHUONG_TIEN}}</li>
+                <li>3. Tên phương tiện: {{TEN_PHUONG_TIEN}}</li>
+                <li>4. Số đăng kí: {{SO_DANG_KY}}</li>
+                <li>5. Giá thuê: {{GIA_THUE}}</li>
+            </div>
+            <div style="color: rgb(192, 0, 0); font-size: 22px">
+                Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi
+            </div>
+        </div>
+    </body>
+</html>
