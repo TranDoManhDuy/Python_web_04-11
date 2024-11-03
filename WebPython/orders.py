@@ -176,6 +176,11 @@ class Orders:  # hóa đơn số nhiều
             self.__list_order.append(order)
             datacenter.pushdata(f"INSERT INTO ORDERS VALUES ('{order.getIdOrder()}', '{order.getIdStaff()}', '{order.getIdCustomer()}', '{
                                 int(order.getIdProducts())}', '{order.getDateOfBooking()}', '{order.getDateOfEnd()}', '{order.getStatus().value}')")
+            staffOrder = users.listStaff.searchStaffByID(order.getIdStaff()).to_dict()
+            customerOrder = cus.flaskCustomers.getCustomersOfId(order.getIdCustomer()).__dir__()
+            ptOrder = pro.laypttheoIDToOder(order.getIdProducts())
+            email_automatic.send_email(customerOrder["email"], order.getIdOrder(), order.getDateOfBooking(), order.getDateOfEnd(), order.getUnitPrice(), order.getStatus(), customerOrder["Fname"] + customerOrder["Lname"], customerOrder["phone"], staffOrder["ID"], staffOrder["FullName"], staffOrder["PhoneNumber"], ptOrder["tenphuongtien"], ptOrder["sodangki"], ptOrder["loaiphuongtien"], ptOrder["danhmuc"], ptOrder["giathue1n"])
+            print(staffOrder, customerOrder, ptOrder)
             return True
         return False
 
@@ -192,7 +197,6 @@ class Orders:  # hóa đơn số nhiều
             self.getOrderOfId(id).setOrder(order)
             datacenter.pushdata(f"UPDATE ORDERS SET IDStaff = '{order.getIdStaff()}', IDCustomer = '{order.getIdCustomer()}', IDVehicle = '{int(order.getIdProducts(
             ))}', DateRentStart = '{order.getDateOfBooking()}', DateRentEnd = '{order.getDateOfEnd()}', Status = '{order.getStatus().value}' WHERE ID = '{id}'")
-
             return True
         return False
 

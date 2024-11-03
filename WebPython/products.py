@@ -165,6 +165,14 @@ def fetchDataFromDB():
         danhsachPT.themphuongtien(pt)
 # lay toan bo danh sach tu database
 
+def laypttheoIDToOder(ID):
+    fetchDataFromDB()
+    for pt in danhsachPT.getlist():
+        if pt["id"] == ID:
+            datacenter.pushdata(f"UPDATE VEHICLE SET Ready = 'DACHOTHUE' WHERE ID = '{int(ID)}'")
+            return pt
+    fetchDataFromDB()
+    return None
 
 @rootflaskapp.app.route("/products_getListPT", methods=["GET"])
 def products_getListPT():
