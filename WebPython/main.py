@@ -5,4 +5,7 @@ import orders
 import users
 import rootflaskapp
 
-rootflaskapp.app.run(debug=True)        
+def MAIN():
+    rootflaskapp.app.run(debug=True)    
+if __name__ == '__main__':
+    MAIN()
