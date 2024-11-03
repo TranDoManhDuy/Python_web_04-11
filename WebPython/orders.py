@@ -30,8 +30,8 @@ class Time:
             print(e)
             self.date = None
 
-    def additionTime(self, day):
-        return self.date + datetime.timedelta(days=day)
+    def afitionTime(self, day):
+        return (self.date - day.date).days
 
     def setTime(self, year, month, day):
         try:
@@ -43,6 +43,9 @@ class Time:
         if self.date == None or time.date == None:
             return None
         return self.date > time.date
+
+    def today(self):
+        return datetime.datetime.now().date().strftime('%Y/%m/%d')
 
     def __str__(self):
         if self.date == None:
@@ -70,13 +73,11 @@ class Order:  # hóa đơn số ít
         # lúc nạp vào là 1 string yyyy/mm/dd
         self.__date_of_booking = Time(date_of_booking)
         self.__date_of_end = Time(date_of_end)  # ngày trả lớn hơn ngày mượn
-        # if self.__date_of_booking.compareTime(self.__date_of_end) == True:
-        #     self.__date_of_end.date = None
-        self.__unit_price = None
+        self.__unit_price = int(self.__date_of_end.afitionTime(
+            self.__date_of_booking)) * pro.danhsachPT.layPttheoID(self.__id_Products).getGiathua1n()
         self.__status = Status(status)  # có thể lỗi
 
     def setOrder(self, order):
-        # order = Order(order)
         self.__id_Staff = order.getIdStaff() if order.getIdStaff() != None else self.__id_Staff
         # check xem co ton tai khach hang ko
         self.__Id_Customer = order.getIdCustomer() if cus.flaskCustomers.getCustomersOfId(
@@ -126,6 +127,7 @@ class Order:  # hóa đơn số ít
                 "IdProducts": pro.danhsachPT.layPttheoID(self.__id_Products).getSodangki(),
                 "DateOfBooking": transformTime(self.__date_of_booking.__str__()). replace("/", "-"),
                 "DateOfEnd": transformTime(self.__date_of_end.__str__()).replace("/", "-"),
+                "UnitPrice": self.__unit_price,
                 "Status": self.__status.__str__()}
 
 
@@ -205,6 +207,7 @@ if __name__ == "__main__":
 
 # orders_list
 
+
 @rootflaskapp.app.route('/orders_list')
 def orders_list():
     return rootflaskapp.render_template('views/orders/list-order.html')
@@ -260,7 +263,8 @@ def addOrder():
 
 @rootflaskapp.app.route('/getNewIdorder')
 def getNewIdorder():
-    return rootflaskapp.jsonify({"id": str(flaskOrders.oldest_id+1).zfill(9)})
+    return rootflaskapp.jsonify({"id": str(flaskOrders.oldest_id+1).zfill(9),
+                                 "today": Time("2021/1/1").today().replace("/", "-")})
 
 
 @rootflaskapp.app.route('/orders_add')
@@ -290,8 +294,10 @@ def editOrder():
 
 @rootflaskapp.app.route('/getOrderFix')
 def getOrderFix():
-    OrderForFix["DateOfBooking"] = transformTime1(OrderForFix["DateOfBooking"].replace("-", "/")).replace("/", "-")
-    OrderForFix["DateOfEnd"] = transformTime1(OrderForFix["DateOfEnd"].replace("-", "/")).replace("/", "-")
+    OrderForFix["DateOfBooking"] = transformTime1(
+        OrderForFix["DateOfBooking"].replace("-", "/")).replace("/", "-")
+    OrderForFix["DateOfEnd"] = transformTime1(
+        OrderForFix["DateOfEnd"].replace("-", "/")).replace("/", "-")
     return rootflaskapp.jsonify(OrderForFix)
 
 
@@ -320,10 +326,11 @@ def orders_edit():
 #     # moi gia tri result la tong doanh thu cua moi thang
 # print(result)
 
+
 @rootflaskapp.app.route('/getStatistical')
 def getStatistical():
     pro.fetchDataFromDB()
-    
+
     lenh = "SELECT * FROM ORDERS"
     data = pro.datacenter.takedata(lenh)
     result = []
