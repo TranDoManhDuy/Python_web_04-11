@@ -330,11 +330,9 @@ def orders_edit():
 #     # moi gia tri result la tong doanh thu cua moi thang
 # print(result)
 
-
 @rootflaskapp.app.route('/getStatistical')
 def getStatistical():
     pro.fetchDataFromDB()
-
     lenh = "SELECT * FROM ORDERS"
     data = pro.datacenter.takedata(lenh)
     result = []
@@ -342,7 +340,9 @@ def getStatistical():
         result.append(0)
     for i in data:
         pt = pro.danhsachPT.layPttheoID(i[3]).to_dict()
-        month = (datetime.datetime.strptime(i[4], "%Y-%m-%d").month)
-        start = datetime.datetime.strptime(i[4], "%Y-%m-%d")
-        end = datetime.datetime.strptime(i[5], "%Y-%m-%d")
+        month = (datetime.datetime.strptime(i[4], "%Y/%m/%d").month)
+        start = datetime.datetime.strptime(i[4], "%Y/%m/%d")
+        end = datetime.datetime.strptime(i[5], "%Y/%m/%d")
         result[month - 1] += pt["giathue1n"] * (end - start).days
+        print(start, end, month, pt["giathue1n"], (end - start).days)
+    return rootflaskapp.jsonify({"result": result, "Tongdonhang": len(data), "Tongdoanhthu": sum(result)})
