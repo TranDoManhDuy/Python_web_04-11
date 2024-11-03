@@ -71,6 +71,7 @@ driverLicenseId.addEventListener('keyup', function (event) {
         messagedriverLicenseId.innerHTML = 'Driver license id must be 12 characters';
         canSubmit = false;
     } else {
+        canSubmit = true;
         fetch('/checkDriverLicenseId', {
             method: 'POST',
             headers: {
@@ -192,6 +193,7 @@ cccd.addEventListener('keyup', function (event) {
             messagecccd.innerHTML = 'CCCD must be 12 characters';
             canSubmit = false;
         } else {
+            canSubmit = true;
             fetch('/checkCCCD', {
                 method: 'POST',
                 headers: {

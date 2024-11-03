@@ -20,7 +20,7 @@ inputvehicleRegNumber = document.getElementById('vehicleRegNumber');
 inputpaymentStatus = document.getElementById('paymentStatus');
 
 let dataGlobal = {}
-isCanSubmit = true
+let isCanSubmit = true
 // ///////////////////
 danhsachHD.addEventListener('click', function () {
     window.location.href = '/orders_list';
@@ -40,8 +40,31 @@ inputemployeeName.addEventListener('keydown', function () {
 });
 inputemployeeName.addEventListener('keyup', function () {
     if (inputemployeeName.value != dataGlobal.IdStaff) {
-        // fetch(/checkStaff, {) đợi chị thảo :))))))))))))))))))
+        fetch('/checkExist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                Id: inputemployeeName.value
+            })
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.status == 'true') {
+                    messageemployeeName.innerHTML = '';
+                    isCanSubmit = true;
+                } else {
+                    messageemployeeName.innerHTML = 'ID number does not exist';
+                    isCanSubmit = false;
+                }
+            });
 
+    }else{
+        messageemployeeName.innerHTML = '';
+        isCanSubmit = true;
     }
 });
 inputrenterCccd.addEventListener('blur', function () {
@@ -74,6 +97,9 @@ inputrenterCccd.addEventListener('keyup', function () {
             }
         });
 
+    }else{
+        messagerenterCccd.innerHTML = '';
+        isCanSubmit = true;
     }
 });
 inputvehicleRegNumber.addEventListener('blur', function () {
@@ -110,6 +136,9 @@ inputvehicleRegNumber.addEventListener('keyup', function () {
             }
         });
 
+    }else{
+        messagevehicleRegNumber.innerHTML = '';
+        isCanSubmit = true;
     }
 });
 buttonSubmit.addEventListener('click', function (event) {

@@ -18,7 +18,7 @@ inputFirstName = document.getElementById('firstName');
 inputCCCD = document.getElementById('cccd');
 
 let dataGlobal = {}
-isCanSubmit = true
+let isCanSubmit = true
 // ///////////////////
 // // Add Event Listener
 listCustomerBtn.addEventListener('click', function () {
