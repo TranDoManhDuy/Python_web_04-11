@@ -39,6 +39,7 @@ inputemployeeName.addEventListener('keyup', function () {
     if (!/^\d+$/.test(inputemployeeName.value)) {
         messageemployeeName.innerHTML = 'ID number must be a number';
         isCanSubmit = false;
+        console.log(isCanSubmit);
     } else {
         fetch('/checkExist', {
             method: 'POST',
@@ -58,7 +59,7 @@ inputemployeeName.addEventListener('keyup', function () {
                     isCanSubmit = true;
                 } else {
                     messageemployeeName.innerHTML = 'ID number does not exist';
-                    isCanSubmit = true;
+                    isCanSubmit = false;
                 }
             });
     }
@@ -69,9 +70,6 @@ inputrenterCccd.addEventListener('blur', function () {
         messagerenterCccd.innerHTML = 'CCCD is required';
     }
 });
-inputrenterCccd.addEventListener('keydown', function () {
-    messagerenterCccd.innerHTML = '';
-});
 inputrenterCccd.addEventListener('keyup', function () {
     if (!/^\d+$/.test(inputrenterCccd.value)) {
         messagerenterCccd.innerHTML = 'CCCD number must be a number';
@@ -81,6 +79,7 @@ inputrenterCccd.addEventListener('keyup', function () {
             messagerenterCccd.innerHTML = 'CCCD number must be 12 characters';
             isCanSubmit = false;
         } else {
+            isCanSubmit = true;
             fetch('/checkCCCD', {
                 method: 'POST',
                 headers: {
@@ -98,8 +97,7 @@ inputrenterCccd.addEventListener('keyup', function () {
                         messagerenterCccd.innerHTML = '';
                         isCanSubmit = true;
                     } else {
-                        messagerenterCccd.innerHTML = 'CCCD not found in the system, please add the customer first';      
-                        isCanSubmit = false;           
+                        messagerenterCccd.innerHTML = 'CCCD not found in the system, please add the customer first';         
                     }
                 });
         }
@@ -109,9 +107,6 @@ inputvehicleRegNumber.addEventListener('blur', function () {
     if (inputvehicleRegNumber.value == '') {
         messagevehicleRegNumber.innerHTML = 'Vehicle Reg Number is required';
     }
-});
-inputvehicleRegNumber.addEventListener('keydown', function () {
-    messagevehicleRegNumber.innerHTML = '';
 });
 inputvehicleRegNumber.addEventListener('keyup', function () {
     if (inputvehicleRegNumber.value != '') {
@@ -131,6 +126,7 @@ inputvehicleRegNumber.addEventListener('keyup', function () {
                 if (data.status != 'existed registrationNumber' && data.status != 'OK') {
                     messagevehicleRegNumber.innerHTML = data.status;
                     isCanSubmit = false;
+                    console.log(isCanSubmit);
                 }
                 if (data.status == 'existed registrationNumber') {
                     messagevehicleRegNumber.innerHTML = '';
@@ -173,16 +169,10 @@ inputpaymentStatus.addEventListener('blur', function () {
         messagepaymentStatus.innerHTML = 'Payment Status is required';
     }
 });
-inputpaymentStatus.addEventListener('keydown', function () {
-    messagepaymentStatus.innerHTML = '';
-});
 inputorderDate.addEventListener('blur', function () {
     if (inputorderDate.value == '') {
         messageorderDate.innerHTML = 'Order Date is required';
     }
-});
-inputorderDate.addEventListener('keydown', function () {
-    messageorderDate.innerHTML = '';
 });
 inputorderDate.addEventListener('keyup', function () {
     if (inputorderDate.value != '') {
@@ -193,9 +183,6 @@ inputendTime.addEventListener('blur', function () {
     if (inputendTime.value == '') {
         messageendTime.innerHTML = 'End Time is required';
     }
-});
-inputendTime.addEventListener('keydown', function () {
-    messageendTime.innerHTML = '';
 });
 inputendTime.addEventListener('keyup', function () {
     if (inputendTime.value != '') {
@@ -220,46 +207,43 @@ btnAddOrder.addEventListener('click', function () {
             .then(function (data) {
                 if (data.status == 'fail') {
                     messagerenterCccd.innerHTML = '';
-                    isCanSubmit = true;
+                    fetch("/addOrder", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            Id: inputinvoiceId.value,
+                            DateOfBooking: inputorderDate.value,
+                            IdStaff: inputemployeeName.value,
+                            DateOfEnd: inputendTime.value,
+                            IdCustomer: inputrenterCccd.value,
+                            IdProducts: inputvehicleRegNumber.value,
+                            Status: inputpaymentStatus.value
+                        })
+                    })
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            if (data.status == 'success') {
+                                alert('Add order success');
+                                window.location.href = '/orders_list';
+                            } else
+                                if (data.status == 'fail') {
+                                    alert('Add order fail');
+                                }
+                                else {
+                                    alert(data.error);
+                                }
+                        });
                 } else {
                     alert('CCCD not found in the system, please add the customer first');
-                    isCanSubmit = false;
                     window.location.href = '/customer_add';
                 }
             });
-        if (isCanSubmit) {
-            fetch("/addOrder", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    Id: inputinvoiceId.value,
-                    DateOfBooking: inputorderDate.value,
-                    IdStaff: inputemployeeName.value,
-                    DateOfEnd: inputendTime.value,
-                    IdCustomer: inputrenterCccd.value,
-                    IdProducts: inputvehicleRegNumber.value,
-                    Status: inputpaymentStatus.value
-                })
-            })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    if (data.status == 'success') {
-                        alert('Add order success');
-                        window.location.href = '/orders_list';
-                    } else
-                        if (data.status == 'fail') {
-                            alert('Add order fail');
-                        }
-                        else {
-                            alert(data.error);
-                        }
-                });
-        }
     } else {
+        console.log(isCanSubmit);
         alert('Please fill in all required fields');
     }
 });
